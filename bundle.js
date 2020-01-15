@@ -35,6 +35,18 @@
 		return arr;
 	}
 
+	function eventHandler(eventName, obj, ...args) {
+
+		obj.forEach(i => {
+			if (args.length === 0) {
+				i.dispatchEvent(new Event(eventName, ...args));
+			} else {
+				i.addEventListener(eventName, ...args);
+			}
+		});
+		return obj;
+	}
+
 	function addClass(obj, ...args) {
 		obj.forEach(i => {
 			splitCSSClasses(args).forEach(cssClass => i.classList.add(cssClass));
@@ -51,13 +63,25 @@
 		return obj;
 	}
 
-	function click(obj, ...args) {
-
+	function attr(obj, attribute, value) {
+		var returnMe = obj;
 		obj.forEach(i => {
-			if (args.length === 0) {
-				i.dispatchEvent(new Event("click"));
+			if (typeof value === "undefined") {
+				returnMe = i.getAttribute(attribute);
 			} else {
-				i.addEventListener("click", ...args);
+				i.setAttribute(attribute, value);
+			}
+		});
+		return obj;
+	}
+
+	function data(obj, attribute, value) {
+		var returnMe = obj;
+		obj.forEach(i => {
+			if (typeof value === "undefined") {
+				returnMe = i.getAttribute("data-" + attribute);
+			} else {
+				i.setAttribute("data-" + attribute, value);
 			}
 		});
 		return obj;
@@ -65,6 +89,14 @@
 
 	function first(obj, ...args) {
 		return jQuery(obj[0]);
+	}
+
+	function hasClass(obj, ...args) {
+		result = false;
+		obj.forEach(i => {
+			splitCSSClasses(args).forEach(cssClass => result = result || i.classList.contains(cssClass));
+		});
+		return result;
 	}
 
 	function on(obj, ...args) {
@@ -106,8 +138,22 @@
 	let m = [];
 	m.push(addClass);
 	m.push(append);
+	m.push(attr);
+
+	let blur = function(...args){ eventHandler("blur",...args); };
+	m.push(blur);
+
+	let click = function(...args){ eventHandler("click",...args); };
 	m.push(click);
+
+	let change = function(...args){ eventHandler("change",...args); };
+	m.push(change);
+	m.push(data);
+
+	let dblclick = function(...args){ eventHandler("dblclick",...args); };
+	m.push(dblclick);
 	m.push(first);
+	m.push(hasClass);
 	m.push(on);
 	m.push(one);
 	m.push(off);

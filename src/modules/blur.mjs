@@ -4,9 +4,9 @@ export default function(obj, ...args) {
 
 	obj.forEach(i => {
 		if (args.length === 0) {
-			i.dispatchEvent(new Event("click", ...args));
+			i.dispatchEvent(new Event("blur", ...args));
 		} else {
-			i.addEventListener("click", ...args);
+			i.addEventListener("blur", ...args);
 		}
 	});
 	return obj;
