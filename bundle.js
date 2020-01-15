@@ -51,9 +51,35 @@
 		return obj;
 	}
 
+	function click(obj, ...args) {
+
+		obj.forEach(i => {
+			if (args.length === 0) {
+				i.dispatchEvent(new Event("click"));
+			} else {
+				i.addEventListener("click", ...args);
+			}
+		});
+		return obj;
+	}
+
+	function first(obj, ...args) {
+		return jQuery(obj[0]);
+	}
+
 	function on(obj, ...args) {
 		obj.forEach(i => {
 			i.addEventListener(...args);
+		});
+		return obj;
+	}
+
+	function one(obj, ...args) {
+		obj.forEach(i => {
+			i.addEventListener(args[0], () => {
+				args[1]();
+				i.removeEventListener(args[0]);
+			}, args[2]);
 		});
 		return obj;
 	}
@@ -80,7 +106,10 @@
 	let m = [];
 	m.push(addClass);
 	m.push(append);
+	m.push(click);
+	m.push(first);
 	m.push(on);
+	m.push(one);
 	m.push(off);
 	m.push(remove);
 	m.push(removeClass);
@@ -98,7 +127,6 @@
 		let m = jQuery.fn;
 
 		for (let i in m) {
-			console.log(m[i]);
 			assert(m[i], "Module array contains invalid value");
 			assert(typeof m[i] === "function", "Module is not function");
 			if (m[i].name) {
@@ -112,8 +140,19 @@
 
 	}
 
+	jQuery._internal__readyFuncs = [];
+
 	jQuery.fn = m;
 	jQuery.fn.extend = function(...arg) { jQuery.fn.push(...arg); };
+	jQuery.ready = function(func) {
+		jQuery._internal__readyFuncs.push(func);
+	};
+
+	document.addEventListener("DOMContentLoaded", () => {
+		jQuery._internal__readyFuncs.forEach((f) => {
+			f();
+		});
+	});
 
 	window.$ = jQuery;
 	window.jQuery = jQuery;

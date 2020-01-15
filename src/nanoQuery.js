@@ -27,8 +27,19 @@ export function jQuery(object) {
 
 }
 
+jQuery._internal__readyFuncs = [];
+
 jQuery.fn = mod;
 jQuery.fn.extend = function(...arg) { jQuery.fn.push(...arg) }
+jQuery.ready = function(func) {
+	jQuery._internal__readyFuncs.push(func);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+	jQuery._internal__readyFuncs.forEach((f) => {
+		f();
+	})
+});
 
 window.$ = jQuery;
 window.jQuery = jQuery;
