@@ -1,11 +1,10 @@
 import {assert} from "../utils.js";
 
-export default function(obj, ...args) {
+export default function(obj, eventName, func, ...args) {
 	obj.forEach(i => {
-		i.addEventListener(args[0], () => {
-			args[1]();
-			i.removeEventListener(args[0]);
-		}, args[2])
+		i.addEventListener(eventName, () => {
+			i.removeEventListener(eventName);
+		}, ...args)
 	});
 	return obj;
 }

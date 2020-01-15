@@ -3,7 +3,7 @@ import {normalizeElementArray, assert} from "./utils.js";
 
 console.log(mod)
 
-export function jQuery(object) {
+export function nQuery(object) {
 
 	if (typeof object === "string") {
 		object = document.querySelectorAll(object);
@@ -11,11 +11,9 @@ export function jQuery(object) {
 
 	object = normalizeElementArray(object);
 
-	let m = jQuery.fn;
+	let m = nQuery.fn;
 
 	for (let i in m) {
-		assert(m[i], "Module array contains invalid value");
-		assert(typeof m[i] === "function", "Module is not function");
 		if (m[i].name) {
 			object[m[i].name] = function(...args) {
 				return m[i](object, ...args);
@@ -27,19 +25,20 @@ export function jQuery(object) {
 
 }
 
-jQuery._internal__readyFuncs = [];
+nQuery._internal__readyFuncs = [];
 
-jQuery.fn = mod;
-jQuery.fn.extend = function(...arg) { jQuery.fn.push(...arg) }
-jQuery.ready = function(func) {
-	jQuery._internal__readyFuncs.push(func);
+nQuery.fn = mod;
+nQuery.fn.extend = function() { arguments.forEach(i => nQuery.fn.push(i)) }
+nQuery.ready = function(func) {
+	nQuery._internal__readyFuncs.push(func);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-	jQuery._internal__readyFuncs.forEach((f) => {
+	nQuery._internal__readyFuncs.forEach(f => {
 		f();
 	})
 });
 
-window.$ = jQuery;
-window.jQuery = jQuery;
+window.$ = nQuery;
+// window.jQuery = nQuery;
+window.nQuery = nQuery;

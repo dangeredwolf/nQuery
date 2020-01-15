@@ -1,6 +1,4 @@
-import {splitCSSClasses} from "../utils.js";
-
-export default function(obj, ...args) {
+export default function(obj) {
 	obj.forEach(i => {
 		while (i.firstChild) {
 			i.removeChild(i.firstChild);

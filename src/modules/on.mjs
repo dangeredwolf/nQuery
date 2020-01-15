@@ -1,8 +1,6 @@
-import {assert} from "../utils.js";
-
-export default function(obj, ...args) {
+export default function(obj, eventName, ...args) {
 	obj.forEach(i => {
-		i.addEventListener(...args)
+		i.addEventListener(eventName, ...args)
 	});
 	return obj;
 }

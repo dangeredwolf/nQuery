@@ -15,14 +15,6 @@
 		}
 	}
 
-	function assert(statement, customErr) {
-		if (!statement) {
-			throw customErr || "Assertion failed";
-		} else {
-			return true;
-		}
-	}
-
 	function splitCSSClasses(...args) {
 		let arr = [];
 		args.forEach((i) => {
@@ -35,13 +27,13 @@
 		return arr;
 	}
 
-	function eventHandler(eventName, obj, ...args) {
+	function eventHandler(eventName, obj) {
 
 		obj.forEach(i => {
 			if (args.length === 0) {
-				i.dispatchEvent(new Event(eventName, ...args));
+				i.dispatchEvent(new Event(eventName, arguments.splice(2)));
 			} else {
-				i.addEventListener(eventName, ...args);
+				i.addEventListener(eventName, arguments.splice(2));
 			}
 		});
 		return obj;
@@ -87,38 +79,37 @@
 		return obj;
 	}
 
-	function first(obj, ...args) {
-		return jQuery(obj[0]);
+	function first(obj) {
+		return nQuery(obj[0]);
 	}
 
 	function hasClass(obj, ...args) {
-		result = false;
+		let result = false;
 		obj.forEach(i => {
 			splitCSSClasses(args).forEach(cssClass => result = result || i.classList.contains(cssClass));
 		});
 		return result;
 	}
 
-	function on(obj, ...args) {
+	function on(obj, eventName, ...args) {
 		obj.forEach(i => {
-			i.addEventListener(...args);
+			i.addEventListener(eventName, ...args);
 		});
 		return obj;
 	}
 
-	function one(obj, ...args) {
+	function one(obj, eventName, func, ...args) {
 		obj.forEach(i => {
-			i.addEventListener(args[0], () => {
-				args[1]();
-				i.removeEventListener(args[0]);
-			}, args[2]);
+			i.addEventListener(eventName, () => {
+				i.removeEventListener(eventName);
+			}, ...args);
 		});
 		return obj;
 	}
 
-	function off(obj, ...args) {
+	function off(obj, eventName, ...args) {
 		obj.forEach(i => {
-			i.removeEventListener(...args);
+			i.removeEventListener(eventName, ...args);
 		});
 		return obj;
 	}
@@ -140,17 +131,17 @@
 	m.push(append);
 	m.push(attr);
 
-	let blur = function(...args){ eventHandler("blur",...args); };
+	let blur = function(){ eventHandler("blur", arguments[0], arguments[1], arguments[2]); };
 	m.push(blur);
 
-	let click = function(...args){ eventHandler("click",...args); };
+	let click = function(){ eventHandler("click", arguments[0], arguments[1], arguments[2]); };
 	m.push(click);
 
-	let change = function(...args){ eventHandler("change",...args); };
+	let change = function(){ eventHandler("change", arguments[0], arguments[1], arguments[2]); };
 	m.push(change);
 	m.push(data);
 
-	let dblclick = function(...args){ eventHandler("dblclick",...args); };
+	let dblclick = function(){ eventHandler("dblclick", arguments[0], arguments[1], arguments[2]); };
 	m.push(dblclick);
 	m.push(first);
 	m.push(hasClass);
@@ -162,7 +153,7 @@
 
 	console.log(m);
 
-	function jQuery(object) {
+	function nQuery(object) {
 
 		if (typeof object === "string") {
 			object = document.querySelectorAll(object);
@@ -170,11 +161,9 @@
 
 		object = normalizeElementArray(object);
 
-		let m = jQuery.fn;
+		let m = nQuery.fn;
 
 		for (let i in m) {
-			assert(m[i], "Module array contains invalid value");
-			assert(typeof m[i] === "function", "Module is not function");
 			if (m[i].name) {
 				object[m[i].name] = function(...args) {
 					return m[i](object, ...args);
@@ -186,24 +175,25 @@
 
 	}
 
-	jQuery._internal__readyFuncs = [];
+	nQuery._internal__readyFuncs = [];
 
-	jQuery.fn = m;
-	jQuery.fn.extend = function(...arg) { jQuery.fn.push(...arg); };
-	jQuery.ready = function(func) {
-		jQuery._internal__readyFuncs.push(func);
+	nQuery.fn = m;
+	nQuery.fn.extend = function() { arguments.forEach(i => nQuery.fn.push(i)); };
+	nQuery.ready = function(func) {
+		nQuery._internal__readyFuncs.push(func);
 	};
 
 	document.addEventListener("DOMContentLoaded", () => {
-		jQuery._internal__readyFuncs.forEach((f) => {
+		nQuery._internal__readyFuncs.forEach(f => {
 			f();
 		});
 	});
 
-	window.$ = jQuery;
-	window.jQuery = jQuery;
+	window.$ = nQuery;
+	// window.jQuery = nQuery;
+	window.nQuery = nQuery;
 
-	exports.jQuery = jQuery;
+	exports.nQuery = nQuery;
 
 	return exports;
 

@@ -1,5 +1,5 @@
-import {jQuery} from "../nanoQuery.js";
+import {nQuery} from "../nanoQuery.js";
 
-export default function(obj, ...args) {
-	return jQuery(obj[0]);
+export default function(obj) {
+	return nQuery(obj[0]);
 }

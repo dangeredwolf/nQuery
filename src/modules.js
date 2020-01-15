@@ -11,19 +11,19 @@ m.push(append);
 import attr from "./modules/attr.mjs";
 m.push(attr);
 
-let blur = function(...args){ eventHandler("blur",...args) }
+let blur = function(){ eventHandler("blur", arguments[0], arguments[1], arguments[2]) }
 m.push(blur);
 
-let click = function(...args){ eventHandler("click",...args) }
+let click = function(){ eventHandler("click", arguments[0], arguments[1], arguments[2]) }
 m.push(click);
 
-let change = function(...args){ eventHandler("change",...args) }
+let change = function(){ eventHandler("change", arguments[0], arguments[1], arguments[2]) }
 m.push(change);
 
 import data from "./modules/data.mjs";
 m.push(data);
 
-let dblclick = function(...args){ eventHandler("dblclick",...args) }
+let dblclick = function(){ eventHandler("dblclick", arguments[0], arguments[1], arguments[2]) }
 m.push(dblclick);
 
 import first from "./modules/first.mjs";
