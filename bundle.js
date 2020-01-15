@@ -51,6 +51,20 @@
 		return obj;
 	}
 
+	function on(obj, ...args) {
+		obj.forEach(i => {
+			i.addEventListener(...args);
+		});
+		return obj;
+	}
+
+	function off(obj, ...args) {
+		obj.forEach(i => {
+			i.removeEventListener(...args);
+		});
+		return obj;
+	}
+
 	function remove(obj) {
 		obj.forEach(i => i.remove()); // i.parentElement.removeChild(i)
 		return obj;
@@ -66,6 +80,8 @@
 	let m = [];
 	m.push(addClass);
 	m.push(append);
+	m.push(on);
+	m.push(off);
 	m.push(remove);
 	m.push(removeClass);
 
@@ -97,7 +113,7 @@
 	}
 
 	jQuery.fn = m;
-	jQuery.fn.extend = function(...arg){jQuery.fn.push(...arg);};
+	jQuery.fn.extend = function(...arg) { jQuery.fn.push(...arg); };
 
 	window.$ = jQuery;
 	window.jQuery = jQuery;

@@ -14,7 +14,6 @@ export function jQuery(object) {
 	let m = jQuery.fn;
 
 	for (let i in m) {
-		console.log(m[i]);
 		assert(m[i], "Module array contains invalid value");
 		assert(typeof m[i] === "function", "Module is not function");
 		if (m[i].name) {
