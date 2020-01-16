@@ -27,13 +27,13 @@
 		return arr;
 	}
 
-	function eventHandler(eventName, obj) {
+	function eventHandler(eventName, obj, ...args) {
 
 		obj.forEach(i => {
-			if (args.length === 0) {
-				i.dispatchEvent(new Event(eventName, arguments.splice(2)));
+			if (arguments.length === 0) {
+				i.dispatchEvent(new Event(eventName, ...args));
 			} else {
-				i.addEventListener(eventName, arguments.splice(2));
+				i.addEventListener(eventName, ...args);
 			}
 		});
 		return obj;
@@ -151,6 +151,49 @@
 	m.push(remove);
 	m.push(removeClass);
 
+	function ajax() {
+		let settings = arguments[1] ? arguments[1] : arguments[0];
+
+		if (typeof arguments[0] === "string") {
+			if (typeof arguments[1] !== "object") {
+				settings = {url:arguments[0]};
+			} else {
+				arguments[1].url = arguments[0];
+			}
+		}
+		var request = new XMLHttpRequest;
+
+		request.open(settings.method || "GET", settings.url, typeof settings.async === "undefined" ? true : settings.async, settings.username, settings.password);
+
+		if (settings.dataType) {
+			settings.overrideMimeType(settings.dataType);
+		}
+
+		return {
+			done: (func) => {
+				request.addEventListener("load", () => {
+					var res = request.responseText;
+
+					try {
+						res = JSON.parse(res);
+					} catch(e) {}
+
+					func(res);
+				});
+				request.send();
+			},
+			fail:(func) => {
+				request.addEventListener("error", func);
+				request.addEventListener("abort", func);
+			},
+			always:(func) => {
+				request.addEventListener("load", func);
+				request.addEventListener("error", func);
+				request.addEventListener("abort", func);
+			}
+		}
+	}
+
 	console.log(m);
 
 	function nQuery(object) {
@@ -159,7 +202,17 @@
 			object = document.querySelectorAll(object);
 		}
 
+		if (object instanceof Document) {
+			object.ready = function(func) {
+				nQuery._internal__readyFuncs.push(func);
+			};
+		}
+
 		object = normalizeElementArray(object);
+
+		// if (typeof object === "undefined" || object.length <= 0) {
+		//
+		// }
 
 		let m = nQuery.fn;
 
@@ -168,8 +221,13 @@
 				object[m[i].name] = function(...args) {
 					return m[i](object, ...args);
 				};
+			} else {
+				object[i] = function(...args) {
+					return m[i](object, ...args);
+				};
 			}
 		}
+
 
 		return object;
 
@@ -178,6 +236,9 @@
 	nQuery._internal__readyFuncs = [];
 
 	nQuery.fn = m;
+	nQuery.ajax = ajax;
+	nQuery.type = (a => { return typeof a } );
+	nQuery.now = (_ => { return Date.now() } );
 	nQuery.fn.extend = function() { arguments.forEach(i => nQuery.fn.push(i)); };
 	nQuery.ready = function(func) {
 		nQuery._internal__readyFuncs.push(func);
@@ -190,7 +251,7 @@
 	});
 
 	window.$ = nQuery;
-	// window.jQuery = nQuery;
+	window.jQuery = nQuery;
 	window.nQuery = nQuery;
 
 	exports.nQuery = nQuery;
