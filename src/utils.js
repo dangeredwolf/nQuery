@@ -25,7 +25,7 @@ export function splitCSSClasses(...args) {
 	let arr = [];
 	args.forEach((i) => {
 		if (typeof i === "string") {
-			i.split(" ").forEach(j => arr.push(j));
+			arr = i.split(" ");
 		} else if (i instanceof Array) {
 			i.forEach(j => arr.push(j))
 		}
