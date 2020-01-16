@@ -32,6 +32,9 @@ m.push(first);
 import hasClass from "./modules/hasClass.mjs";
 m.push(hasClass);
 
+import height from "./modules/height.mjs";
+m.push(height);
+
 import hide from "./modules/hide.mjs";
 m.push(hide);
 
