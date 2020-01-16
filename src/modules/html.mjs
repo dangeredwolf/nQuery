@@ -1,15 +1,17 @@
-export default function(obj, attribute, value) {
+export default function(obj, value) {
+
 	if (typeof value === "undefined") {
 		if (obj[0]) {
-			return obj[0].getAttribute(attribute);
+			return obj[0].innerHTML;
 		} else {
 			return undefined;
 		}
 	}
 
 	obj.forEach(i => {
-		i.setAttribute(attribute, value);
+		i.innerHTML = value;
 	});
 
 	return obj;
+
 }

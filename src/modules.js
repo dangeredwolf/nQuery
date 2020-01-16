@@ -32,6 +32,9 @@ m.push(first);
 import hasClass from "./modules/hasClass.mjs";
 m.push(hasClass);
 
+import html from "./modules/html.mjs";
+m.push(html);
+
 import on from "./modules/on.mjs";
 m.push(on);
 

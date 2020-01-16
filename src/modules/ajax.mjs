@@ -27,7 +27,15 @@ export default function() {
 
 				func(res);
 			});
-			request.send();
+			let str;
+
+			if (request.body) {
+				try {
+					str = JSON.stringify(request.body);
+				} catch(e) {}
+			}
+
+			request.send(str);
 		},
 		fail:(func) => {
 			request.addEventListener("error", func);

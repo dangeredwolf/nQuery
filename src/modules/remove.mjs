@@ -1,4 +1,4 @@
 export default function(obj) {
-	obj.forEach(i => i.remove()); // i.parentElement.removeChild(i)
+	obj.forEach(i => i.remove());
 	return obj;
 }

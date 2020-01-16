@@ -1,13 +1,17 @@
-import {normalizeElementArray} from "../utils.js";
+export default function(obj, tag, value) {
 
-export default function(obj, attribute, value) {
-	var returnMe = obj;
-	obj.forEach(i => {
-		if (typeof value === "undefined") {
-			returnMe = i.getAttribute("data-" + attribute);
+	if (typeof value === "undefined") {
+		if (obj[0]) {
+			return obj[0].getAttribute("data-" + tag);
 		} else {
-			i.setAttribute("data-" + attribute, value);
+			return undefined;
 		}
+	}
+
+	obj.forEach(i => {
+		i.setAttribute("data-" + tag, value);
 	});
+
 	return obj;
+
 }
