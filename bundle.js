@@ -1,173 +1,182 @@
 (function (exports) {
 	'use strict';
 
-	function normalizeElementArray(obj) {
+	function normalizeElementArray(o) {
 		// https://stackoverflow.com/questions/22289727/difference-between-using-array-isarray-and-instanceof-array
-		if (obj instanceof Array || obj instanceof NodeList) {
-			return obj;
-		} else if (obj instanceof HTMLElement) {
-			obj = [obj];
-			return obj;
+		if (o instanceof Array || o instanceof NodeList) {
+			return o;
+		} else if (o instanceof HTMLElement) {
+			o = [o];
+			return o;
 		} else {
 			console.warn("Someone passed me a non-element object?");
-			console.info(obj);
-			return obj;
+			console.info(o);
+			return o;
 		}
 	}
 
-	function splitCSSClasses(...args) {
-		let arr = [];
-		args.forEach((i) => {
-			if (typeof i === "string") {
-				i.split(" ").forEach(j => arr.push(j));
-			} else if (i instanceof Array) {
-				i.forEach(j => arr.push(j));
-			}
+	function splitCSSClasses(...a) {
+		let r = [];
+		a.forEach(i => {
+			if (typeof i === "string")
+				r = i.split(" ");
+			else if (i instanceof Array)
+				i.forEach(j => r.push(j));
 		});
-		return arr;
+		return r;
 	}
 
-	function eventHandler(eventName, obj, ...args) {
+	var eventHandler = (eventName, o, ...a) => {
+		o.forEach(i => a.length === 0 ? i.dispatchEvent(new Event(eventName, ...a)) : i.addEventListener(eventName, ...a));
+		return o;
+	};
 
-		obj.forEach(i => {
-			if (arguments.length === 0) {
-				i.dispatchEvent(new Event(eventName, ...args));
-			} else {
-				i.addEventListener(eventName, ...args);
-			}
+	var addClass = (o, ...a) => {
+		o.forEach(i => splitCSSClasses(a).forEach(c => i.classList.add(c)));
+		return o;
+	};
+
+	var append = (o, ...a) => {
+		o.forEach(i => a.forEach(j => normalizeElementArray(j).forEach(k => i.appendChild(k))));
+		return o;
+	};
+
+	var attr = (o, attr, v) => {
+		return o[0] ? o[0].getAttribute(attr) : undefined;
+	};
+
+	var data = (o, tag, v) => {
+
+		if (typeof v === "undefined") {
+			return o[0] ? o[0].getAttribute("data-" + tag) : undefined;
+		}
+
+		o.forEach(i => i.setAttribute("data-" + tag, v));
+
+		return o;
+
+	};
+
+	var first = o => new nQueryObject([o[0]]);
+
+	var hasClass = (o, ...a) => {
+		let r = false;
+		o.forEach(i => splitCSSClasses(a).forEach(c => r = r || i.classList.contains(c)));
+		return r;
+	};
+
+	var height = o => o[0] ? o[0].offsetHeight : o;
+
+	var hide = o => {
+		o.forEach(i => i.style.display = "none");
+		return o;
+	};
+
+	var html = (o, v) => {
+
+		if (typeof v === "undefined") {
+			return o[0] ? o[0].innerHTML : undefined;
+		}
+
+		o.forEach(i => {
+			i.innerHTML = v;
 		});
-		return obj;
-	}
 
-	function addClass(obj, ...args) {
-		obj.forEach(i => {
-			splitCSSClasses(args).forEach(cssClass => i.classList.add(cssClass));
+		return o;
+
+	};
+
+	var on = (o, eventName, ...a) => {
+		o.forEach(i => {
+			i.addEventListener(eventName, ...a);
 		});
-		return obj;
-	}
+		return o;
+	};
 
-	function append(obj, ...args) {
-		obj.forEach(i => {
-			args.forEach(j => {
-				normalizeElementArray(j).forEach(k => i.appendChild(k));
-			});
-		});
-		return obj;
-	}
-
-	function attr(obj, attribute, value) {
-		var returnMe = obj;
-		obj.forEach(i => {
-			if (typeof value === "undefined") {
-				returnMe = i.getAttribute(attribute);
-			} else {
-				i.setAttribute(attribute, value);
-			}
-		});
-		return obj;
-	}
-
-	function data(obj, attribute, value) {
-		var returnMe = obj;
-		obj.forEach(i => {
-			if (typeof value === "undefined") {
-				returnMe = i.getAttribute("data-" + attribute);
-			} else {
-				i.setAttribute("data-" + attribute, value);
-			}
-		});
-		return obj;
-	}
-
-	function first(obj) {
-		return nQuery(obj[0]);
-	}
-
-	function hasClass(obj, ...args) {
-		let result = false;
-		obj.forEach(i => {
-			splitCSSClasses(args).forEach(cssClass => result = result || i.classList.contains(cssClass));
-		});
-		return result;
-	}
-
-	function on(obj, eventName, ...args) {
-		obj.forEach(i => {
-			i.addEventListener(eventName, ...args);
-		});
-		return obj;
-	}
-
-	function one(obj, eventName, func, ...args) {
-		obj.forEach(i => {
-			i.addEventListener(eventName, () => {
+	var one = (o, eventName, func, ...args) => {
+		o.forEach(i => {
+			i.addEventListener(eventName, e => {
 				i.removeEventListener(eventName);
+				func(e);
 			}, ...args);
 		});
-		return obj;
-	}
+		return o;
+	};
 
-	function off(obj, eventName, ...args) {
-		obj.forEach(i => {
-			i.removeEventListener(eventName, ...args);
+	var off = (o, eventName, ...a) => {
+		o.forEach(i => {
+			i.removeEventListener(eventName, ...a);
 		});
-		return obj;
-	}
+		return o;
+	};
 
-	function remove(obj) {
-		obj.forEach(i => i.remove()); // i.parentElement.removeChild(i)
-		return obj;
-	}
+	var remove = o => {
+		o.forEach(i => i.remove());
+		return o;
+	};
 
-	function removeClass(obj, ...args) {
-		obj.forEach(i => {
-			splitCSSClasses(args).forEach(cssClass => i.classList.remove(cssClass));
-		});
-		return obj;
-	}
+	var removeClass = (o, ...a) => {
+		o.forEach(i => splitCSSClasses(a).forEach(c => i.classList.remove(c)));
+		return o;
+	};
+
+	var show = o => {
+		o.forEach(i => i.style.display = null);
+		return o;
+	};
+
+	var toggleClass = (o, ...a) => {
+		o.forEach(i => splitCSSClasses(a).forEach(c => i.classList.toggle(c)));
+		return o;
+	};
 
 	let m = [];
 	m.push(addClass);
 	m.push(append);
 	m.push(attr);
 
-	let blur = function(){ eventHandler("blur", arguments[0], arguments[1], arguments[2]); };
+	let blur = (...a) => eventHandler("blur", ...a);
 	m.push(blur);
 
-	let click = function(){ eventHandler("click", arguments[0], arguments[1], arguments[2]); };
+	let click = (...a) => eventHandler("click", ...a);
 	m.push(click);
 
-	let change = function(){ eventHandler("change", arguments[0], arguments[1], arguments[2]); };
+	let change = (...a) => eventHandler("change", ...a);
 	m.push(change);
 	m.push(data);
 
-	let dblclick = function(){ eventHandler("dblclick", arguments[0], arguments[1], arguments[2]); };
+	let dblclick = (...a) => eventHandler("dblclick", ...a);
 	m.push(dblclick);
 	m.push(first);
 	m.push(hasClass);
+	m.push(height);
+	m.push(hide);
+	m.push(html);
 	m.push(on);
 	m.push(one);
 	m.push(off);
 	m.push(remove);
 	m.push(removeClass);
+	m.push(show);
+	m.push(toggleClass);
 
-	function ajax() {
-		let settings = arguments[1] ? arguments[1] : arguments[0];
+	var ajax = () => {
+		let a = arguments;
+		let settings = a[1] ? a[1] : a[0];
 
-		if (typeof arguments[0] === "string") {
-			if (typeof arguments[1] !== "object") {
-				settings = {url:arguments[0]};
+		if (typeof a[0] === "string") {
+			if (typeof a[1] !== "object") {
+				settings = {url:a[0]};
 			} else {
-				arguments[1].url = arguments[0];
+				a[1].url = a[0];
 			}
 		}
 		var request = new XMLHttpRequest;
 
 		request.open(settings.method || "GET", settings.url, typeof settings.async === "undefined" ? true : settings.async, settings.username, settings.password);
 
-		if (settings.dataType) {
+		if (settings.dataType)
 			settings.overrideMimeType(settings.dataType);
-		}
 
 		return {
 			done: (func) => {
@@ -180,7 +189,15 @@
 
 					func(res);
 				});
-				request.send();
+				let str;
+
+				if (request.body) {
+					try {
+						str = JSON.stringify(request.body);
+					} catch(e) {}
+				}
+
+				request.send(str);
 			},
 			fail:(func) => {
 				request.addEventListener("error", func);
@@ -192,9 +209,27 @@
 				request.addEventListener("abort", func);
 			}
 		}
-	}
+	};
 
 	console.log(m);
+
+	class nQueryObject extends Array {
+
+		constructor(a) {
+			super();
+			for (var i = 0; i < a.length; i++) {
+				this[i] = a[i];
+			}
+		}
+
+
+	}
+
+	for (let i in m) {
+		console.log(m[i]);
+			console.log(m[i].name);
+		nQueryObject.prototype[m[i].name] = function(...a){return m[i](this, ...a)};
+	}
 
 	function nQuery(object) {
 
@@ -204,57 +239,56 @@
 
 		if (object instanceof Document) {
 			object.ready = function(func) {
-				nQuery._internal__readyFuncs.push(func);
+				nQuery.__internal_r.push(func);
 			};
 		}
 
 		object = normalizeElementArray(object);
 
-		// if (typeof object === "undefined" || object.length <= 0) {
+		// let m = nQuery.fn;
 		//
+		// for (let i in m) {
+		// 	if (m[i].name) {
+		// 		object[m[i].name] = (...args) => {
+		// 			return m[i](object, ...args);
+		// 		};
+		// 	} else {
+		// 		object[i] = (...args) => {
+		// 			return m[i](object, ...args);
+		// 		};
+		// 	}
 		// }
 
-		let m = nQuery.fn;
+		let newObject = new nQueryObject(object);
 
-		for (let i in m) {
-			if (m[i].name) {
-				object[m[i].name] = function(...args) {
-					return m[i](object, ...args);
-				};
-			} else {
-				object[i] = function(...args) {
-					return m[i](object, ...args);
-				};
-			}
-		}
-
-
-		return object;
+		return newObject;
 
 	}
 
-	nQuery._internal__readyFuncs = [];
+	nQuery.__internal_r = [];
 
-	nQuery.fn = m;
 	nQuery.ajax = ajax;
 	nQuery.type = (a => { return typeof a } );
 	nQuery.now = (_ => { return Date.now() } );
-	nQuery.fn.extend = function() { arguments.forEach(i => nQuery.fn.push(i)); };
-	nQuery.ready = function(func) {
-		nQuery._internal__readyFuncs.push(func);
+	nQuery.fn = {};
+	nQuery.fn.extend = () => { arguments.forEach(i => {nQueryObject[i.name] = i;}); };
+	nQuery.ready = (func) => {
+		nQuery.__internal_r.push(func);
 	};
 
 	document.addEventListener("DOMContentLoaded", () => {
-		nQuery._internal__readyFuncs.forEach(f => {
+		nQuery.__internal_r.forEach(f => {
 			f();
 		});
 	});
 
 	window.$ = nQuery;
-	window.jQuery = nQuery;
+	// window.jQuery = nQuery;
 	window.nQuery = nQuery;
+	window.__nQueryObject = nQueryObject;
 
 	exports.nQuery = nQuery;
+	exports.nQueryObject = nQueryObject;
 
 	return exports;
 

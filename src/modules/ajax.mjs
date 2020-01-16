@@ -1,20 +1,20 @@
-export default function() {
-	let settings = arguments[1] ? arguments[1] : arguments[0];
+export default () => {
+	let a = arguments;
+	let settings = a[1] ? a[1] : a[0];
 
-	if (typeof arguments[0] === "string") {
-		if (typeof arguments[1] !== "object") {
-			settings = {url:arguments[0]}
+	if (typeof a[0] === "string") {
+		if (typeof a[1] !== "object") {
+			settings = {url:a[0]}
 		} else {
-			arguments[1].url = arguments[0]
+			a[1].url = a[0]
 		}
 	}
 	var request = new XMLHttpRequest;
 
 	request.open(settings.method || "GET", settings.url, typeof settings.async === "undefined" ? true : settings.async, settings.username, settings.password);
 
-	if (settings.dataType) {
-		settings.overrideMimeType(settings.dataType)
-	}
+	if (settings.dataType)
+		settings.overrideMimeType(settings.dataType);
 
 	return {
 		done: (func) => {

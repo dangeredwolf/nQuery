@@ -1,8 +1,6 @@
 import {splitCSSClasses} from "../utils.js";
 
-export default function(obj, ...args) {
-	obj.forEach(i => {
-		splitCSSClasses(args).forEach(cssClass => i.classList.remove(cssClass));
-	});
-	return obj;
+export default (o, ...a) => {
+	o.forEach(i => splitCSSClasses(a).forEach(c => i.classList.remove(c)));
+	return o;
 }

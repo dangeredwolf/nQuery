@@ -1,8 +1,6 @@
-export default function(obj) {
-	obj.forEach(i => {
-		while (i.firstChild) {
-			i.removeChild(i.firstChild);
-		}
+export default o => {
+	o.forEach(i => while (i.firstChild) {
+		i.removeChild(i.firstChild);
 	});
-	return obj;
+	return o;
 }

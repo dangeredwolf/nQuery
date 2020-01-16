@@ -1,5 +1,3 @@
-import {nQuery} from "../nanoQuery.js";
+import {nQueryObject} from "../nanoQuery.js";
 
-export default function(obj) {
-	return nQuery(obj[0]);
-}
+export default o => new nQueryObject([o[0]])

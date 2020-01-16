@@ -1,6 +1,6 @@
-export default function(obj, eventName, ...args) {
-	obj.forEach(i => {
-		i.addEventListener(eventName, ...args)
+export default (o, eventName, ...a) => {
+	o.forEach(i => {
+		i.addEventListener(eventName, ...a)
 	});
-	return obj;
+	return o;
 }

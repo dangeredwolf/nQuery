@@ -1,6 +1,4 @@
-export default function(obj) {
-	obj.forEach(i => {
-		i.style.display = null;
-	});
-	return obj;
+export default o => {
+	o.forEach(i => i.style.display = null);
+	return o;
 }
