@@ -32,6 +32,9 @@ m.push(first);
 import hasClass from "./modules/hasClass.mjs";
 m.push(hasClass);
 
+import hide from "./modules/hide.mjs";
+m.push(hide);
+
 import html from "./modules/html.mjs";
 m.push(html);
 
@@ -49,5 +52,11 @@ m.push(remove);
 
 import removeClass from "./modules/removeClass.mjs";
 m.push(removeClass);
+
+import show from "./modules/show.mjs";
+m.push(show);
+
+import toggleClass from "./modules/toggleClass.mjs";
+m.push(toggleClass);
 
 export default m;
