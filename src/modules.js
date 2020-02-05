@@ -112,4 +112,7 @@ m.push(text);
 import toggleClass from "./element/toggleClass.mjs";
 m.push(toggleClass);
 
+import width from "./element/width.mjs";
+m.push(width);
+
 export {m, m_document, m_window}
