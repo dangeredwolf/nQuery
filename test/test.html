@@ -22,7 +22,7 @@
 		<div id="testid">testid</div>
 		<button onclick="test1_func()">Run Test - Add/Remove Class (Query and Calls)</button><br>
 		<button onclick="test2_func()">Run Test - Add/Remove Class (Calls)</button><br>
-		<button onclick="test3_func()">Run Test - Add/Remove Class (Queries)</button><br>
+		<button onclick="test3_func()">Run Test - Queries</button><br>
 		<script>
 
 		test1 = {}
@@ -110,7 +110,7 @@
 					setTimeout(()=>{test3.raw.run()},200);
 					setTimeout(()=>{
 						alert(
-							"Results for test - addClass/removeClass Queries\n" +
+							"Results for test - Queries\n" +
 							"jQuery: " + Math.floor(test3.jQuery.stats.mean * 10000000)/10 + "ns average" +
 							"\nnQuery: " + Math.floor(test3.nQuery.stats.mean * 10000000)/10 + "ns average" +
 							"\nPlain JS: " + Math.floor(test3.raw.stats.mean * 10000000)/10 + "ns average"
