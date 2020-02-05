@@ -1,4 +1,5 @@
-# nQuery
+# nQuery [![Build Status](https://travis-ci.com/dangeredwolf/nQuery.svg?branch=master)](https://travis-ci.com/dangeredwolf/nQuery) [![devDependencies Status](https://david-dm.org/dangeredwolf/nQuery/dev-status.svg)](https://david-dm.org/dangeredwolf/nQuery?type=dev)
+
 A small, modular, fast alternative to jQuery.
 
 nQuery is currently in **Alpha**. It is therefore not recommended that you use nQuery in production yet.
