@@ -7,6 +7,8 @@ nQuery is currently in **Alpha**. It is therefore not recommended that you use n
 
 At less than 5 KB minified, it's way smaller than jQuery 3.4.1's 87 KB size. It makes nQuery viable even for simple webpages.
 
+*(Fun fact: this README file is larger than a minified version of nQuery)*
+
 ### N stands for Nitro
 
 nQuery is fast, and was designed from the beginning to offer simple, jQuery-compatible calls, but cutting out overhead and getting you closer to the raw attributes, functions, and events the browser already provides for you. 
@@ -14,6 +16,8 @@ nQuery is fast, and was designed from the beginning to offer simple, jQuery-comp
 `test/test.html` provides a few simple performance tests which you can run and verify for yourself.
 
 We ran these tests using nQuery 0.2.0 in Chrome 79
+
+------
 
 Add/Remove Class (Queries and (Chained) Function Calls):
 
@@ -23,6 +27,8 @@ Add/Remove Class (Queries and (Chained) Function Calls):
 
 Having nearly double the overall performance is great in larger applications.
 
+------
+
 Add/Remove Class (Function Calls):
 
 * **jQuery 3.4.1 - 11.7±0.3 ns avg**
@@ -31,11 +37,15 @@ Add/Remove Class (Function Calls):
 
 What's really impressive is that nQuery was able to beat plain javascript by 0.1 ns, something that came up even over multiple test runs.
 
+------
+
 Query Calls:
 
 * **jQuery 3.4.1 - 1.8±0.1 ns avg**
 * **nQuery 0.2.0 - 1.3±0.1 ns avg**
 * **Raw JS - 0.6±0.05 ns avg**
+
+------
 
 ### nQuery is familiar to jQuery users
 
