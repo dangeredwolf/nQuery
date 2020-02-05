@@ -391,7 +391,7 @@
 
 	window.nQueryObject = nQueryObject;
 
-	window.nQueryDocument = nQueryDocument;
+	window.nQueryDocument = nQueryDocument; 
 	window.nQueryElement = nQueryElement;
 	window.nQueryWindow = nQueryWindow;
 
