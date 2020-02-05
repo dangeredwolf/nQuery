@@ -41,7 +41,17 @@
 	};
 
 	var attr = (o, attr, v) => {
-		return o[0] ? o[0].getAttribute(attr) : undefined;
+		if (v) {
+			o.forEach(i => i.setAttribute(attr, v));
+			return o;
+		} else {
+			if (o[0]) {
+				return o[0].getAttribute(attr) || undefined;
+			}
+		}
+
+
+
 	};
 
 	var eventHandler = (eventName, o, ...a) => {
@@ -153,6 +163,8 @@
 		return o;
 	};
 
+	var width = o => o[0] ? o[0].offsetWidth : o;
+
 	let m_window = [];
 	let m_document = [];
 	let m = [];
@@ -222,6 +234,7 @@
 	m.push(show);
 	m.push(text);
 	m.push(toggleClass);
+	m.push(width);
 
 	var ajax = () => {
 		let a = arguments;
