@@ -57,6 +57,11 @@
 
 	};
 
+	var each = (o, func) => {
+		o.forEach((a, i) => {func(i);});
+		return o;
+	};
+
 	var first = o => new nQueryObject([o[0]]);
 
 	var hasClass = (o, ...a) => {
@@ -147,6 +152,7 @@
 
 	let dblclick = (...a) => eventHandler("dblclick", ...a);
 	m.push(dblclick);
+	m.push(each);
 	m.push(first);
 	m.push(hasClass);
 	m.push(height);
@@ -270,10 +276,10 @@
 
 	nQuery.ajax = ajax;
 	nQuery.type = (a => { return typeof a } );
-	nQuery.now = (_ => { return Date.now() } );
+	nQuery.now = (a => { return Date.now() } );
 	nQuery.fn = {};
-	nQuery.fn.extend = () => { arguments.forEach(i => {nQueryObject[i.name] = i;}); };
-	nQuery.ready = (func) => {
+	nQuery.fn.extend = exts => { for (let i in exts) { nQueryObject.prototype[i] = exts[i]; } };
+	nQuery.ready = func => {
 		nQuery.__internal_r.push(func);
 	};
 
@@ -294,4 +300,4 @@
 	return exports;
 
 }({}));
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=nquery.js.map

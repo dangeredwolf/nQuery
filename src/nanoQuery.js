@@ -61,10 +61,10 @@ nQuery.__internal_r = [];
 
 nQuery.ajax = ajax;
 nQuery.type = (a => { return typeof a } );
-nQuery.now = (_ => { return Date.now() } );
+nQuery.now = (a => { return Date.now() } );
 nQuery.fn = {};
-nQuery.fn.extend = () => { arguments.forEach(i => {nQueryObject[i.name] = i}) }
-nQuery.ready = (func) => {
+nQuery.fn.extend = exts => { for (let i in exts) { nQueryObject.prototype[i] = exts[i] } }
+nQuery.ready = func => {
 	nQuery.__internal_r.push(func);
 }
 

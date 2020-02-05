@@ -26,6 +26,9 @@ m.push(data);
 let dblclick = (...a) => eventHandler("dblclick", ...a);
 m.push(dblclick);
 
+import each from "./modules/each.mjs";
+m.push(each);
+
 import first from "./modules/first.mjs";
 m.push(first);
 

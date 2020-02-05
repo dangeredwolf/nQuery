@@ -7,7 +7,7 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
 	input: 'src/nanoQuery.js',
 	output: {
-		file: 'bundle.js',
+		file: 'nquery.js',
 		format: 'iife', // immediately-invoked function expression — suitable for <script> tags
 		sourcemap: true
 	},
