@@ -1,5 +1,5 @@
 {
-    "name": "nanoQuery",
+    "name": "nQuery",
     "version": "0.1.0",
     "description": "A small, highly modular alternative to jQuery",
     "scripts": {

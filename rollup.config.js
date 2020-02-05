@@ -5,7 +5,7 @@ import resolve from '@rollup/plugin-node-resolve';
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-	input: 'src/nanoQuery.js',
+	input: 'src/nQuery.js',
 	output: {
 		file: 'nquery.js',
 		format: 'iife', // immediately-invoked function expression — suitable for <script> tags
