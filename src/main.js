@@ -1,43 +1,27 @@
-import {m, m_document, m_window} from "./modules.js";
+import {m, m_document, m_window, m_properties} from "./modules.js";
 import {normalizeElementArray} from "./utils.js";
 import ajax from "./misc/ajax.mjs";
 
-export class nQueryObject extends Array {
-	constructor(a) {
-		super();
-		// for X in Y loops are somehow unbelievably slow here.. it's kinda amazing... so instead we use a fast incremental loop
-		for (var i = 0; i < a.length; i++) {
-			this[i] = a[i];
-		}
-	}
-}
+import nQueryObject from "./class/nQueryObject.mjs";
+import nQueryDocument from "./class/nQueryDocument.mjs";
+import nQueryElement from "./class/nQueryElement.mjs";
+import nQueryWindow from "./class/nQueryWindow.mjs";
 
-export class nQueryElement extends nQueryObject {
-	constructor(a) {
-		super(a);
-	}
-}
 
-export class nQueryWindow extends nQueryObject {
-	constructor(a) {
-		super(a);
-	}
-}
-
-export class nQueryDocument extends nQueryObject {
-	constructor(a) {
-		super(a);
-	}
+for (let i in m_properties) {
+	nQueryObject.prototype[i] = m_properties[i];
 }
 
 for (let i in m) {
-	nQueryElement.prototype[m[i].name] = function(...a){return m[i](this, ...a)};
+	nQueryElement.prototype[m[i].name] = function(...a){return m[i].call(this, this, ...a)};
 }
+
 for (let i in m_document) {
-	nQueryDocument.prototype[m_document[i].name] = function(...a){return m_document[i](this, ...a)};
+	nQueryDocument.prototype[m_document[i].name] = function(...a){return m_document[i].call(this, this, ...a)};
 }
+
 for (let i in m_window) {
-	nQueryWindow.prototype[m_window[i].name] = function(...a){return m_window[i](this, ...a)};
+	nQueryWindow.prototype[m_window[i].name] = function(...a){return m_window[i].call(this, this, ...a)};
 }
 
 export function nQuery(object) {
@@ -65,15 +49,29 @@ nQuery.ajax = ajax;
 nQuery.type = (a => { return typeof a } );
 nQuery.now = (a => { return Date.now() } );
 nQuery.fn = {};
-nQuery.fn.extend = exts => { for (let i in exts) { nQueryObject.prototype[i] = exts[i] } }
+
+nQuery.fn.extend = function(exts) {
+	for (let i in exts) {
+		nQueryObject.prototype[i] = function() {
+			console.log(this);
+			exts[i].apply(this, arguments)
+		}
+	}
+}
+
 nQuery.ready = func => {
-	nQuery.__internal_r.push(func);
+	if (nQuery.__ready) {
+		func();
+	} else {
+		nQuery.__internal_r.push(func);
+	}
 }
 
 document.addEventListener("DOMContentLoaded", () => {
 	nQuery.__internal_r.forEach(f => {
 		f();
 	});
+	nQuery.__ready = true;
 });
 
 window.$ = nQuery;

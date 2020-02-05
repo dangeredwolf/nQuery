@@ -1,6 +1,13 @@
 let m_window = [];
 let m_document = [];
+let m_properties = {};
 let m = [];
+
+// properties
+// Properties apply to apple nQueryObjects and are static
+
+import jquery from "./properties/jquery.mjs";
+m_properties["jquery"] = jquery;
 
 // document
 
@@ -115,4 +122,4 @@ m.push(toggleClass);
 import width from "./element/width.mjs";
 m.push(width);
 
-export {m, m_document, m_window}
+export {m, m_document, m_window, m_properties}
