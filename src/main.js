@@ -29,7 +29,13 @@ for (let i in m_window) {
 export function nQuery(object) {
 
 	if (typeof object === "string") {
-		object = document.querySelectorAll(object);
+		if (object.match(/<.+>/g) === null) {
+			object = document.querySelectorAll(object);
+		} else {
+			let temp = document.createElement("div");
+			temp.innerHTML = object;
+			object = temp.children;
+		}
 	}
 
 	if (object instanceof nQueryObject) {
