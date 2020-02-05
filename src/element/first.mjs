@@ -1,3 +1,3 @@
-import {nQueryObject} from "../nQuery.js";
+import {nQuery} from "../nQuery.js";
 
-export default o => new nQueryObject([o[0]])
+export default o => nQuery([o[0]])

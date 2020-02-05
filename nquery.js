@@ -1,6 +1,10 @@
 (function (exports) {
 	'use strict';
 
+	var ready = (func) => {
+		nQuery.__internal_r.push(func);
+	};
+
 	function normalizeElementArray(o) {
 		// https://stackoverflow.com/questions/22289727/difference-between-using-array-isarray-and-instanceof-array
 		if (o instanceof Array || o instanceof NodeList) {
@@ -26,11 +30,6 @@
 		return r;
 	}
 
-	var eventHandler = (eventName, o, ...a) => {
-		o.forEach(i => a.length === 0 ? i.dispatchEvent(new Event(eventName, ...a)) : i.addEventListener(eventName, ...a));
-		return o;
-	};
-
 	var addClass = (o, ...a) => {
 		o.forEach(i => splitCSSClasses(a).forEach(c => i.classList.add(c)));
 		return o;
@@ -45,6 +44,11 @@
 		return o[0] ? o[0].getAttribute(attr) : undefined;
 	};
 
+	var eventHandler = (eventName, o, ...a) => {
+		o.forEach(i => a.length === 0 ? i.dispatchEvent(new Event(eventName, ...a)) : i.addEventListener(eventName, ...a));
+		return o;
+	};
+
 	var data = (o, tag, v) => {
 
 		if (typeof v === "undefined") {
@@ -57,12 +61,12 @@
 
 	};
 
-	var each = (o, func) => {
-		o.forEach((a, i) => {func(i);});
+	var each = (o, f) => {
+		o.forEach((a, i) => {f(i);});
 		return o;
 	};
 
-	var first = o => new nQueryObject([o[0]]);
+	var first = o => nQuery$1([o[0]]);
 
 	var hasClass = (o, ...a) => {
 		let r = false;
@@ -130,12 +134,29 @@
 		return o;
 	};
 
+	var text = (o, v) => {
+
+		if (typeof v === "undefined") {
+			return o[0] ? o[0].innerText : undefined;
+		}
+
+		o.forEach(i => {
+			i.innerText = v;
+		});
+
+		return o;
+
+	};
+
 	var toggleClass = (o, ...a) => {
 		o.forEach(i => splitCSSClasses(a).forEach(c => i.classList.toggle(c)));
 		return o;
 	};
 
+	let m_window = [];
+	let m_document = [];
 	let m = [];
+	m.push(ready);
 	m.push(addClass);
 	m.push(append);
 	m.push(attr);
@@ -148,6 +169,9 @@
 
 	let change = (...a) => eventHandler("change", ...a);
 	m.push(change);
+
+	let contextmenu = (...a) => eventHandler("contextmenu", ...a);
+	m.push(contextmenu);
 	m.push(data);
 
 	let dblclick = (...a) => eventHandler("dblclick", ...a);
@@ -157,13 +181,46 @@
 	m.push(hasClass);
 	m.push(height);
 	m.push(hide);
+
+	let hover = (...a) => eventHandler("mouseover", ...a);
+	m.push(hover);
 	m.push(html);
+
+	let mousedown = (...a) => eventHandler("mousedown", ...a);
+	m.push(mousedown);
+
+	let mouseenter = (...a) => eventHandler("mouseenter", ...a);
+	m.push(mouseenter);
+
+	let mouseleave = (...a) => eventHandler("mouseleave", ...a);
+	m.push(mouseleave);
+
+	let mousemove = (...a) => eventHandler("mousemove", ...a);
+	m.push(mousemove);
+
+	let mouseout = (...a) => eventHandler("mouseout", ...a);
+	m.push(mouseout);
+
+	let mouseover = (...a) => eventHandler("mouseover", ...a);
+	m.push(mouseover);
+
+	let mouseup = (...a) => eventHandler("mouseup", ...a);
+	m.push(mouseup);
 	m.push(on);
 	m.push(one);
 	m.push(off);
+
+	let resize = (...a) => eventHandler("resize", ...a);
+	m.push(resize);
+	m_window.push(resize); // also should work on window
 	m.push(remove);
 	m.push(removeClass);
+
+	let scroll = (...a) => eventHandler("scroll", ...a);
+	m.push(scroll);
+	m_window.push(scroll); // also should work on window
 	m.push(show);
+	m.push(text);
 	m.push(toggleClass);
 
 	var ajax = () => {
@@ -217,10 +274,7 @@
 		}
 	};
 
-	console.log(m);
-
 	class nQueryObject extends Array {
-
 		constructor(a) {
 			super();
 			// for X in Y loops are somehow unbelievably slow here.. it's kinda amazing... so instead we use a fast incremental loop
@@ -228,74 +282,87 @@
 				this[i] = a[i];
 			}
 		}
+	}
 
+	class nQueryElement extends nQueryObject {
+		constructor(a) {
+			super(a);
+		}
+	}
 
+	class nQueryWindow extends nQueryObject {
+		constructor(a) {
+			super(a);
+		}
+	}
+
+	class nQueryDocument extends nQueryObject {
+		constructor(a) {
+			super(a);
+		}
 	}
 
 	for (let i in m) {
-		console.log(m[i]);
-			console.log(m[i].name);
-		nQueryObject.prototype[m[i].name] = function(...a){return m[i](this, ...a)};
+		nQueryElement.prototype[m[i].name] = function(...a){return m[i](this, ...a)};
+	}
+	for (let i in m_document) {
+		nQueryDocument.prototype[m_document[i].name] = function(...a){return m_document[i](this, ...a)};
+	}
+	for (let i in m_window) {
+		nQueryWindow.prototype[m_window[i].name] = function(...a){return m_window[i](this, ...a)};
 	}
 
-	function nQuery(object) {
+	function nQuery$1(object) {
 
 		if (typeof object === "string") {
 			object = document.querySelectorAll(object);
 		}
 
-		if (object instanceof Document) {
-			object.ready = function(func) {
-				nQuery.__internal_r.push(func);
-			};
+		if (object instanceof nQueryObject) {
+			return object;
+		} else if (object instanceof Document) {
+			return new nQueryDocument(object);
+		} else if (object instanceof Window) {
+			return new nQueryWindow(object);
+		} else {
+			return new nQueryElement(normalizeElementArray(object));
+
 		}
-
-		object = normalizeElementArray(object);
-
-		// let m = nQuery.fn;
-		//
-		// for (let i in m) {
-		// 	if (m[i].name) {
-		// 		object[m[i].name] = (...args) => {
-		// 			return m[i](object, ...args);
-		// 		};
-		// 	} else {
-		// 		object[i] = (...args) => {
-		// 			return m[i](object, ...args);
-		// 		};
-		// 	}
-		// }
-
-		let newObject = new nQueryObject(object);
-
-		return newObject;
 
 	}
 
-	nQuery.__internal_r = [];
+	nQuery$1.__internal_r = [];
 
-	nQuery.ajax = ajax;
-	nQuery.type = (a => { return typeof a } );
-	nQuery.now = (a => { return Date.now() } );
-	nQuery.fn = {};
-	nQuery.fn.extend = exts => { for (let i in exts) { nQueryObject.prototype[i] = exts[i]; } };
-	nQuery.ready = func => {
-		nQuery.__internal_r.push(func);
+	nQuery$1.ajax = ajax;
+	nQuery$1.type = (a => { return typeof a } );
+	nQuery$1.now = (a => { return Date.now() } );
+	nQuery$1.fn = {};
+	nQuery$1.fn.extend = exts => { for (let i in exts) { nQueryObject.prototype[i] = exts[i]; } };
+	nQuery$1.ready = func => {
+		nQuery$1.__internal_r.push(func);
 	};
 
 	document.addEventListener("DOMContentLoaded", () => {
-		nQuery.__internal_r.forEach(f => {
+		nQuery$1.__internal_r.forEach(f => {
 			f();
 		});
 	});
 
-	window.$ = nQuery;
+	window.$ = nQuery$1;
 	// window.jQuery = nQuery;
-	window.nQuery = nQuery;
-	window.__nQueryObject = nQueryObject;
+	window.nQuery = nQuery$1;
 
-	exports.nQuery = nQuery;
+	window.nQueryObject = nQueryObject;
+
+	window.nQueryDocument = nQueryDocument;
+	window.nQueryElement = nQueryElement;
+	window.nQueryWindow = nQueryWindow;
+
+	exports.nQuery = nQuery$1;
+	exports.nQueryDocument = nQueryDocument;
+	exports.nQueryElement = nQueryElement;
 	exports.nQueryObject = nQueryObject;
+	exports.nQueryWindow = nQueryWindow;
 
 	return exports;
 

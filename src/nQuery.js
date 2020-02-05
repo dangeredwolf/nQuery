@@ -1,11 +1,8 @@
-import mod from "./modules.js";
+import {m, m_document, m_window} from "./modules.js";
 import {normalizeElementArray} from "./utils.js";
-import ajax from "./modules/ajax.mjs";
-
-console.log(mod)
+import ajax from "./misc/ajax.mjs";
 
 export class nQueryObject extends Array {
-
 	constructor(a) {
 		super();
 		// for X in Y loops are somehow unbelievably slow here.. it's kinda amazing... so instead we use a fast incremental loop
@@ -13,14 +10,34 @@ export class nQueryObject extends Array {
 			this[i] = a[i];
 		}
 	}
-
-
 }
 
-for (let i in mod) {
-	console.log(mod[i]);
-		console.log(mod[i].name);
-	nQueryObject.prototype[mod[i].name] = function(...a){return mod[i](this, ...a)};
+export class nQueryElement extends nQueryObject {
+	constructor(a) {
+		super(a);
+	}
+}
+
+export class nQueryWindow extends nQueryObject {
+	constructor(a) {
+		super(a);
+	}
+}
+
+export class nQueryDocument extends nQueryObject {
+	constructor(a) {
+		super(a);
+	}
+}
+
+for (let i in m) {
+	nQueryElement.prototype[m[i].name] = function(...a){return m[i](this, ...a)};
+}
+for (let i in m_document) {
+	nQueryDocument.prototype[m_document[i].name] = function(...a){return m_document[i](this, ...a)};
+}
+for (let i in m_window) {
+	nQueryWindow.prototype[m_window[i].name] = function(...a){return m_window[i](this, ...a)};
 }
 
 export function nQuery(object) {
@@ -29,31 +46,16 @@ export function nQuery(object) {
 		object = document.querySelectorAll(object);
 	}
 
-	if (object instanceof Document) {
-		object.ready = function(func) {
-			nQuery.__internal_r.push(func);
-		}
+	if (object instanceof nQueryObject) {
+		return object;
+	} else if (object instanceof Document) {
+		return new nQueryDocument(object);
+	} else if (object instanceof Window) {
+		return new nQueryWindow(object);
+	} else {
+		return new nQueryElement(normalizeElementArray(object));
+
 	}
-
-	object = normalizeElementArray(object);
-
-	// let m = nQuery.fn;
-	//
-	// for (let i in m) {
-	// 	if (m[i].name) {
-	// 		object[m[i].name] = (...args) => {
-	// 			return m[i](object, ...args);
-	// 		};
-	// 	} else {
-	// 		object[i] = (...args) => {
-	// 			return m[i](object, ...args);
-	// 		};
-	// 	}
-	// }
-
-	let newObject = new nQueryObject(object);
-
-	return newObject;
 
 }
 
@@ -71,10 +73,15 @@ nQuery.ready = func => {
 document.addEventListener("DOMContentLoaded", () => {
 	nQuery.__internal_r.forEach(f => {
 		f();
-	})
+	});
 });
 
 window.$ = nQuery;
 // window.jQuery = nQuery;
 window.nQuery = nQuery;
-window.__nQueryObject = nQueryObject;
+
+window.nQueryObject = nQueryObject;
+
+window.nQueryDocument = nQueryDocument;
+window.nQueryElement = nQueryElement;
+window.nQueryWindow = nQueryWindow;
