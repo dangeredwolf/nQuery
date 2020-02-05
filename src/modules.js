@@ -62,6 +62,9 @@ m.push(removeClass);
 import show from "./modules/show.mjs";
 m.push(show);
 
+import text from "./modules/text.mjs";
+m.push(text);
+
 import toggleClass from "./modules/toggleClass.mjs";
 m.push(toggleClass);
 
