@@ -1,6 +1,8 @@
 (function (exports) {
 	'use strict';
 
+	var version = "69";
+
 	var ready = (func) => {
 		nQuery.__internal_r.push(func);
 	};
@@ -167,7 +169,9 @@
 
 	let m_window = [];
 	let m_document = [];
+	let m_properties = {};
 	let m = [];
+	m_properties["jquery"] = version;
 	m.push(ready);
 	m.push(addClass);
 	m.push(append);
@@ -297,6 +301,12 @@
 		}
 	}
 
+	class nQueryDocument extends nQueryObject {
+		constructor(a) {
+			super(a);
+		}
+	}
+
 	class nQueryElement extends nQueryObject {
 		constructor(a) {
 			super(a);
@@ -309,20 +319,20 @@
 		}
 	}
 
-	class nQueryDocument extends nQueryObject {
-		constructor(a) {
-			super(a);
-		}
+	for (let i in m_properties) {
+		nQueryObject.prototype[i] = m_properties[i];
 	}
 
 	for (let i in m) {
-		nQueryElement.prototype[m[i].name] = function(...a){return m[i](this, ...a)};
+		nQueryElement.prototype[m[i].name] = function(...a){return m[i].call(this, this, ...a)};
 	}
+
 	for (let i in m_document) {
-		nQueryDocument.prototype[m_document[i].name] = function(...a){return m_document[i](this, ...a)};
+		nQueryDocument.prototype[m_document[i].name] = function(...a){return m_document[i].call(this, this, ...a)};
 	}
+
 	for (let i in m_window) {
-		nQueryWindow.prototype[m_window[i].name] = function(...a){return m_window[i](this, ...a)};
+		nQueryWindow.prototype[m_window[i].name] = function(...a){return m_window[i].call(this, this, ...a)};
 	}
 
 	function nQuery$1(object) {
@@ -350,15 +360,29 @@
 	nQuery$1.type = (a => { return typeof a } );
 	nQuery$1.now = (a => { return Date.now() } );
 	nQuery$1.fn = {};
-	nQuery$1.fn.extend = exts => { for (let i in exts) { nQueryObject.prototype[i] = exts[i]; } };
+
+	nQuery$1.fn.extend = function(exts) {
+		for (let i in exts) {
+			nQueryObject.prototype[i] = function() {
+				console.log(this);
+				exts[i].apply(this, arguments);
+			};
+		}
+	};
+
 	nQuery$1.ready = func => {
-		nQuery$1.__internal_r.push(func);
+		if (nQuery$1.__ready) {
+			func();
+		} else {
+			nQuery$1.__internal_r.push(func);
+		}
 	};
 
 	document.addEventListener("DOMContentLoaded", () => {
 		nQuery$1.__internal_r.forEach(f => {
 			f();
 		});
+		nQuery$1.__ready = true;
 	});
 
 	window.$ = nQuery$1;
@@ -372,10 +396,6 @@
 	window.nQueryWindow = nQueryWindow;
 
 	exports.nQuery = nQuery$1;
-	exports.nQueryDocument = nQueryDocument;
-	exports.nQueryElement = nQueryElement;
-	exports.nQueryObject = nQueryObject;
-	exports.nQueryWindow = nQueryWindow;
 
 	return exports;
 
