@@ -11,8 +11,35 @@ At less than 5 KB minified, it's way smaller than jQuery 3.4.1's 87 KB size. It 
 
 nQuery is fast, and was designed from the beginning to offer simple, jQuery-compatible calls, but cutting out overhead and getting you closer to the raw attributes, functions, and events the browser already provides for you. 
 
-### nQuery is Familiar
+`test/test.html` provides a few simple performance tests which you can run and verify for yourself.
 
+We ran these tests using nQuery 0.2.0 in Chrome 79
+
+Add/Remove Class (Queries and (Chained) Function Calls):
+
+* **jQuery 3.4.1 - 13.7±0.5 ns avg**
+* **nQuery 0.2.0 - 6.2±0.1 ns avg**
+* **Raw JS (querySelector/classList) - 5.5±0.1 ns avg**
+
+Having nearly double the overall performance is great in larger applications.
+
+Add/Remove Class (Function Calls):
+
+* **jQuery 3.4.1 - 11.7±0.3 ns avg**
+* **nQuery 0.2.0 - 4.8±0.1 ns avg**
+* **Raw JS (querySelector/classList) - 4.9±0.05 ns avg**
+
+What's really impressive is that nQuery was able to beat plain javascript by 0.1 ns, something that came up even over multiple test runs.
+
+Query Calls:
+
+* **jQuery 3.4.1 - 1.8±0.1 ns avg**
+* **nQuery 0.2.0 - 1.3±0.1 ns avg**
+* **Raw JS - 0.6±0.05 ns avg**
+
+### nQuery is familiar to jQuery users
+
+Example code:
 ```
 $(document).ready(() => {
 
@@ -51,3 +78,72 @@ If there's a compatibility issue with one of these browsers, please report the i
 * IE support is **not** guaranteed and requires transpilation
 
 If IE11 compatibility is a must, you can transpile to ES5 using Babel (use `npm run babel`). However, you negate some of the file size and performance benefits. While we will make reasonable efforts to make sure it works with IE11, support is *not* guaranteed with babel or browsers not listed above.
+
+### Building / Testing
+
+We build using [Node.js](https://nodejs.org/en/). A recent Current or LTS version should work fine.
+
+nQuery does not have runtime dependencies, only dev dependencies.
+
+Build using `npm run build` (generates `nquery.js` file)
+
+Minify for production using `npm run minify` (generates `nquery.min.js` file)
+
+If you need to build an IE-compatible version, use `npm run babel`.
+
+---------------------
+
+We have a dedicated test sandbox which also contains the benchmarks at `test/test.html`.
+
+Note: This is set up by default to use the uncompressed, development version of nQuery.
+
+### Selective builds
+
+If you only need certain functions, any non-core function can be removed, and you can add your own using the primary function tree or with `nQuery.fn.extend` (work in progress, not fully functional).
+
+`src/modules.js` is where the module index is stored. You can make your modifications here.
+
+```
+import append from "./element/append.mjs";
+m.push(append);
+```
+
+Each entry looks something like this.
+
+* `m` is the module list for Element objects
+* `m_window` is the module list for Window objects
+* `m_document` is the module list for Document objects
+
+If a function works in more than one place, for example, the scroll event (works on elements or window), you can push it to multiple arrays.
+
+```
+let scroll = (...args) => eventHandler("scroll", ...args);
+m.push(scroll);
+m_window.push(scroll); // you can push to both!
+```
+
+### Global variables
+
+**`window.nQuery`**
+
+nQuery accessor. Always set.
+
+**`window.$`**
+
+nQuery accessor shorthand. Set by default.
+
+**`window.jQuery`**
+
+nQuery accessor. Optional; useful if you have code that accessed jQuery using `window.jQuery` and you're switching to nQuery.
+
+**`window.nQueryObject`**
+
+The root nQuery object so your code can compare whether something is an `instanceof nQueryObject`. You should not access this alone, as it's a superclass without methods.
+
+**`window.nQueryDocument`**
+**`window.nQueryElement`**
+**`window.nQueryWindow`**
+
+Extended classes of the `nQueryObject`, but these are the objects that correspond with what functions it support. `$("p")` is an instance of `nQueryObject` and `nQueryElement` but NOT `nQueryWindow`, as an example.
+
+Creating new objects with these alone is possible, but not recommended. `window.$`/`window.nQuery` will always create the correct object given the input.
