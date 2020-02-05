@@ -1,6 +1,6 @@
 {
     "name": "nQuery",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "A small, highly modular alternative to jQuery",
     "scripts": {
         "babel": "babel nquery.js -o nquery.compat.js",
