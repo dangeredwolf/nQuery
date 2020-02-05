@@ -1,3 +1,13 @@
+# nquery output files
+
+nquery.min.js
+nquery.js.map
+nquery.js
+nquery.compat.js.map
+nquery.compat.js
+nquery.compat.min.js.map
+nquery.compat.min.js
+
 # ignore output
 lib
 
