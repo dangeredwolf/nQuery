@@ -5,6 +5,7 @@
     "scripts": {
         "babel": "babel nquery.js -o nquery.compat.js",
         "build": "rollup -c",
+        "test": "rollup -c",
         "minify": "uglifyjs -c -m nquery.js --output nquery.min.js"
     },
     "repository": "https://github.com/dangeredwolf/nanoQuery",
