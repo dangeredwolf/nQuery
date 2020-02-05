@@ -1,7 +1,20 @@
 let m_window = [];
 let m_document = [];
 let m_properties = {};
+let m_global = [];
 let m = [];
+
+// global
+// globals are accessed by nQuery.X()
+
+import ajax from "./global/ajax.mjs";
+m_global.push(ajax);
+
+import now from "./global/now.mjs";
+m_global.push(now);
+
+import type from "./global/type.mjs";
+m_global.push(type);
 
 // properties
 // Properties apply to apple nQueryObjects and are static
@@ -13,6 +26,7 @@ m_properties["jquery"] = jquery;
 
 import ready from "./document/ready.mjs";
 m.push(ready);
+m_global.push(ready); // ready is also accessible globally (nQuery.ready)
 
 // element
 
@@ -122,4 +136,4 @@ m.push(toggleClass);
 import width from "./element/width.mjs";
 m.push(width);
 
-export {m, m_document, m_window, m_properties}
+export {m, m_document, m_window, m_properties, m_global}

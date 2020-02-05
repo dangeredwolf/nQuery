@@ -1,7 +1,5 @@
-import {m, m_document, m_window, m_properties} from "./modules.js";
+import {m, m_document, m_window, m_properties, m_global} from "./modules.js";
 import {normalizeElementArray} from "./utils.js";
-import ajax from "./misc/ajax.mjs";
-
 import nQueryObject from "./class/nQueryObject.mjs";
 import nQueryDocument from "./class/nQueryDocument.mjs";
 import nQueryElement from "./class/nQueryElement.mjs";
@@ -10,6 +8,10 @@ import nQueryWindow from "./class/nQueryWindow.mjs";
 
 for (let i in m_properties) {
 	nQueryObject.prototype[i] = m_properties[i];
+}
+
+for (let i in m_global) {
+	nQuery[m_global[i].name] = function(...a){return m_global[i].call(this, ...a)};
 }
 
 for (let i in m) {
@@ -45,9 +47,6 @@ export function nQuery(object) {
 
 nQuery.__internal_r = [];
 
-nQuery.ajax = ajax;
-nQuery.type = (a => { return typeof a } );
-nQuery.now = (a => { return Date.now() } );
 nQuery.fn = {};
 
 nQuery.fn.extend = function(exts) {
@@ -56,14 +55,6 @@ nQuery.fn.extend = function(exts) {
 			console.log(this);
 			exts[i].apply(this, arguments)
 		}
-	}
-}
-
-nQuery.ready = func => {
-	if (nQuery.__ready) {
-		func();
-	} else {
-		nQuery.__internal_r.push(func);
 	}
 }
 
