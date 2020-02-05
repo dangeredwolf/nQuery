@@ -1,7 +1,7 @@
 
 export function normalizeElementArray(o) {
 	// https://stackoverflow.com/questions/22289727/difference-between-using-array-isarray-and-instanceof-array
-	if (o instanceof Array || o instanceof NodeList) {
+	if (o instanceof Array || o instanceof NodeList || o instanceof HTMLCollection) {
 		return o;
 	} else if (o instanceof HTMLElement) {
 		o = [o];
