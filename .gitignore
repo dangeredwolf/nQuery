@@ -1,15 +1,16 @@
+# ignore output
+lib
+
 # nquery output files
 
 nquery.min.js
+nquery.min.js.map
 nquery.js.map
 nquery.js
 nquery.compat.js.map
 nquery.compat.js
 nquery.compat.min.js.map
 nquery.compat.min.js
-
-# ignore output
-lib
 
 # Logs
 logs
@@ -116,4 +117,3 @@ dist
 # TernJS port file
 .tern-port
 nquery.js
-nquery.js.map
