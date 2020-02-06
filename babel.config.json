@@ -1,9 +1,11 @@
 {
-  "plugins": [
-	  "@babel/plugin-transform-arrow-functions",
-	  "@babel/plugin-transform-classes",
-	  "@babel/plugin-transform-function-name",
-	  "@babel/plugin-transform-parameters",
-	  "@babel/plugin-transform-spread"
-  ]
+	"presets": ["@babel/preset-env"],
+	"plugins": [
+		"@babel/plugin-transform-arrow-functions",
+		"@babel/plugin-transform-classes",
+		"@babel/plugin-transform-function-name",
+		"@babel/plugin-transform-parameters",
+		"@babel/plugin-transform-spread",
+		"@babel/plugin-transform-block-scoping"
+	]
 }

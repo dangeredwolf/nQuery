@@ -35,6 +35,7 @@ export function nQuery(object) {
 			let temp = document.createElement("div");
 			temp.innerHTML = object;
 			object = temp.children;
+			temp.remove();
 		}
 	}
 

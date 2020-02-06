@@ -1,4 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve';
+import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
 
 // `npm run build` -> `production` is true
@@ -8,11 +9,12 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
 	input: 'src/main.js',
 	output: {
-		file: 'nquery.js',
+		file: 'nquery.compat.js',
 		format: 'iife', // immediately-invoked function expression — suitable for <script> tags
 		sourcemap: true
 	},
 	plugins: [
-		resolve()
+		resolve(),
+		babel()
 	]
 };
