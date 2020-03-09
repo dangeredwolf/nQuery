@@ -1,23 +1,23 @@
 
-export function normalizeElementArray(o) {
+export function normalizeElementArray(obj) {
 	// don't forget that nQueryObject is an instance of Array
 
 	// https://stackoverflow.com/questions/22289727/difference-between-using-array-isarray-and-instanceof-array
-	if (o instanceof Array || o instanceof NodeList || o instanceof HTMLCollection) {
-		return o;
-	} else if (o instanceof HTMLElement) {
-		o = [o];
-		return o;
+	if (obj instanceof Array || obj instanceof NodeList || obj instanceof HTMLCollection) {
+		return obj;
+	} else if (obj instanceof HTMLElement) {
+		obj = [obj];
+		return obj;
 	} else {
 		console.warn("Someone passed me a non-element object?");
-		console.info(o);
-		return o;
+		console.info(obj);
+		return obj;
 	}
 }
 
-export function filter(statement, o) {
+export function filter(statement, obj) {
 	if (typeof statement === "string") {
-		return o.filter(a => a.matches(statement))
+		return obj.filter(a => a.matches(statement))
 	}
 }
 
