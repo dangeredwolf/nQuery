@@ -12,7 +12,6 @@ export default {
 		file: 'nquery.js',
 		format: 'iife', // immediately-invoked function expression — suitable for <script> tags
 		sourcemap: true,
-		name:"nquery",
 		hoistTransitiveImports: true
 	},
 	plugins: [
