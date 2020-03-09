@@ -1,10 +1,10 @@
-export default (o, attr, v) => {
-	if (v) {
-		o.forEach(i => i.setAttribute(attr, v));
-		return o;
+export default (objects, attr, value) => {
+	if (value) {
+		objects.forEach(obj => obj.setAttribute(attr, value));
+		return objects;
 	} else {
-		if (o[0]) {
-			return o[0].getAttribute(attr) || undefined;
+		if (objects[0]) {
+			return objects[0].getAttribute(attr) || undefined;
 		}
 	}
 

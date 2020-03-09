@@ -1,11 +1,11 @@
-export default (o, tag, v) => {
+export default (objects, tag, value) => {
 
-	if (typeof v === "undefined") {
-		return o[0] ? o[0].getAttribute("data-" + tag) : undefined;
+	if (typeof value === "undefined") {
+		return objects[0] ? objects[0].getAttribute("data-" + tag) : undefined;
 	}
 
-	o.forEach(i => i.setAttribute("data-" + tag, v));
+	objects.forEach(obj => obj.setAttribute("data-" + tag, value));
 
-	return o;
+	return objects;
 
 }

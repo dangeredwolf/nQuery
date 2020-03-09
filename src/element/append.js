@@ -1,6 +1,6 @@
 import {normalizeElementArray} from "../utils.js";
 
-export default (o, ...a) => {
-	o.forEach(i => a.forEach(j => normalizeElementArray(j).forEach(k => i.appendChild(k))));
-	return o;
+export default (objects, ...elements) => {
+	objects.forEach(obj => elements.forEach(element => normalizeElementArray(element).forEach(realElement => obj.appendChild(realElement))));
+	return objects;
 }

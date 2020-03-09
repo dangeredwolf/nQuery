@@ -1,4 +1,4 @@
-export default (o, f) => {
-	o.forEach((a, i) => {f(i)})
-	return o;
+export default (objects, func) => {
+	objects.forEach((obj, i) => {func(i)})
+	return objects;
 }

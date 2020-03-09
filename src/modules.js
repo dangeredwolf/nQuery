@@ -10,13 +10,13 @@ let m = [];
 // import("./global/ajax.js").then(ajax => m_global.push(ajax))
 
 import ajax from "./global/ajax.js";
-m_global.push(ajax);
+m_global.ajax = ajax;
 
 import now from "./global/now.js";
-m_global.push(now);
+m_global.now = now;
 
 import type from "./global/type.js";
-m_global.push(type);
+m_global.type = type;
 
 // properties
 // Properties apply to nQueryObjects and are static
@@ -27,116 +27,96 @@ m_properties["jquery"] = jquery;
 // document
 
 import ready from "./document/ready.js";
-m.push(ready);
-m_global.push(ready); // ready is also accessible globally (nQuery.ready)
+m.ready = ready;
+m_global.ready = ready; // ready is also accessible globally (nQuery.ready)
 
 // element
 
 import addClass from "./element/addClass.js";
-m.push(addClass);
+m.addClass = addClass;
 
 import append from "./element/append.js";
-m.push(append);
+m.append = append;
 
 import attr from "./element/attr.js";
-m.push(attr);
+m.attr = attr;
 
 import eventHandler from "./eventHandler.js";
 let e = eventHandler;
 
-let blur = (...a) => e("blur", ...a);
-m.push(blur);
+m.blur = (...a) => e("blur", ...a);
+m.click = (...a) => e("click", ...a);
+m.change = (...a) => e("change", ...a);
 
-let click = (...a) => e("click", ...a);
-m.push(click);
-
-let change = (...a) => e("change", ...a);
-m.push(change);
-
-let contextmenu = (...a) => e("contextmenu", ...a);
-m.push(contextmenu);
+m.contextmenu = (...a) => e("contextmenu", ...a);
 
 import data from "./element/data.js";
-m.push(data);
+m.data = data;
 
-let dblclick = (...a) => e("dblclick", ...a);
-m.push(dblclick);
+m.dblclick = (...a) => e("dblclick", ...a);
 
 import each from "./element/each.js";
-m.push(each);
+m.each = each;
 
 import first from "./element/first.js";
-m.push(first);
+m.first = first;
 
 import hasClass from "./element/hasClass.js";
-m.push(hasClass);
+m.hasClass = hasClass;
 
 import height from "./element/height.js";
-m.push(height);
+m.height = height;
 
 import hide from "./element/hide.js";
-m.push(hide);
+m.hide = hide;
 
 let hover = (...a) => e("mouseover", ...a);
-m.push(hover);
+m.hover = hover;
 
 import html from "./element/html.js";
-m.push(html);
+m.html = html;
 
-let mousedown = (...a) => e("mousedown", ...a);
-m.push(mousedown);
-
-let mouseenter = (...a) => e("mouseenter", ...a);
-m.push(mouseenter);
-
-let mouseleave = (...a) => e("mouseleave", ...a);
-m.push(mouseleave);
-
-let mousemove = (...a) => e("mousemove", ...a);
-m.push(mousemove);
-
-let mouseout = (...a) => e("mouseout", ...a);
-m.push(mouseout);
-
-let mouseover = (...a) => e("mouseover", ...a);
-m.push(mouseover);
-
-let mouseup = (...a) => e("mouseup", ...a);
-m.push(mouseup);
+m.mousedown = (...a) => e("mousedown", ...a);
+m.mouseenter = (...a) => e("mouseenter", ...a);
+m.mouseleave = (...a) => e("mouseleave", ...a);
+m.mousemove = (...a) => e("mousemove", ...a);
+m.mouseout = (...a) => e("mouseout", ...a);
+m.mouseover = (...a) => e("mouseover", ...a);
+m.mouseup = (...a) => e("mouseup", ...a);
 
 import on from "./element/on.js";
-m.push(on);
+m.on = on;
 
 import one from "./element/one.js";
-m.push(one);
+m.one = one;
 
 import off from "./element/off.js";
-m.push(off);
+m.off = off;
 
 let resize = (...a) => e("resize", ...a);
-m.push(resize);
-m_window.push(resize); // also should work on window
+m.resize = resize;
+m_window.resize = resize; // also should work on window
 
 import remove from "./element/remove.js";
-m.push(remove);
+m.remove = remove;
 
 import removeClass from "./element/removeClass.js";
-m.push(removeClass);
+m.removeClass = removeClass;
 
 let scroll = (...a) => e("scroll", ...a);
-m.push(scroll);
-m_window.push(scroll); // also should work on window
+m.scroll = scroll;
+m_window.scroll = scroll; // also should work on window
 
 import show from "./element/show.js";
-m.push(show);
+m.show = show;
 
 import text from "./element/text.js";
-m.push(text);
+m.text = text;
 
 import toggleClass from "./element/toggleClass.js";
-m.push(toggleClass);
+m.toggleClass = toggleClass;
 
 import width from "./element/width.js";
-m.push(width);
+m.width = width;
 
 export {m, m_document, m_window, m_properties, m_global}

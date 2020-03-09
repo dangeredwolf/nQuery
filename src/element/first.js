@@ -1,3 +1,3 @@
 import {nQuery} from "../main.js";
 
-export default o => nQuery([o[0]])
+export default objects => nQuery([objects[0]])

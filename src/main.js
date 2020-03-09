@@ -11,19 +11,19 @@ for (let i in m_properties) {
 }
 
 for (let i in m_global) {
-	nQuery[m_global[i].name] = function(...a){return m_global[i].call(this, ...a)};
+	nQuery[i] = function(...a){return m_global[i].call(this, ...a)};
 }
 
 for (let i in m) {
-	nQueryElement.prototype[m[i].name] = function(...a){return m[i].call(this, this, ...a)};
+	nQueryElement.prototype[i] = function(...a){return m[i].call(this, this, ...a)};
 }
 
 for (let i in m_document) {
-	nQueryDocument.prototype[m_document[i].name] = function(...a){return m_document[i].call(this, this, ...a)};
+	nQueryDocument.prototype[i] = function(...a){return m_document[i].call(this, this, ...a)};
 }
 
 for (let i in m_window) {
-	nQueryWindow.prototype[m_window[i].name] = function(...a){return m_window[i].call(this, this, ...a)};
+	nQueryWindow.prototype[i] = function(...a){return m_window[i].call(this, this, ...a)};
 }
 
 export function nQuery(object) {
