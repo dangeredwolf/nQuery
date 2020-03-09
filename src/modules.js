@@ -7,8 +7,6 @@ let m = [];
 // global
 // globals are accessed by nQuery.X()
 
-// import("./global/ajax.js").then(ajax => m_global.push(ajax))
-
 import ajax from "./global/ajax.js";
 m_global.ajax = ajax;
 

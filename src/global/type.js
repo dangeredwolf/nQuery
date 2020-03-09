@@ -1,1 +1,1 @@
-export default a => typeof a
+export default object => typeof object

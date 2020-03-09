@@ -11,19 +11,19 @@ for (let i in m_properties) {
 }
 
 for (let i in m_global) {
-	nQuery[i] = function(...a){return m_global[i].call(this, ...a)};
+	nQuery[i] = function(...args){return m_global[i].call(this, ...args)};
 }
 
 for (let i in m) {
-	nQueryElement.prototype[i] = function(...a){return m[i].call(this, this, ...a)};
+	nQueryElement.prototype[i] = function(...args){return m[i].call(this, this, ...args)};
 }
 
 for (let i in m_document) {
-	nQueryDocument.prototype[i] = function(...a){return m_document[i].call(this, this, ...a)};
+	nQueryDocument.prototype[i] = function(...args){return m_document[i].call(this, this, ...args)};
 }
 
 for (let i in m_window) {
-	nQueryWindow.prototype[i] = function(...a){return m_window[i].call(this, this, ...a)};
+	nQueryWindow.prototype[i] = function(...args){return m_window[i].call(this, this, ...args)};
 }
 
 export function nQuery(object) {
@@ -57,10 +57,10 @@ nQuery.__internal_r = [];
 nQuery.fn = {};
 
 nQuery.fn.extend = function(exts) {
-	for (let i in exts) {
-		nQueryObject.prototype[i] = function() {
+	for (let ext in exts) {
+		nQueryObject.prototype[ext] = function() {
 			console.log(this);
-			exts[i].apply(this, arguments)
+			exts[ext].apply(this, arguments)
 		}
 	}
 }

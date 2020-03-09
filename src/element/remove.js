@@ -1,4 +1,4 @@
-export default o => {
-	o.forEach(i => i.remove());
-	return o;
+export default objects => {
+	objects.forEach(obj => obj.remove());
+	return objects;
 }

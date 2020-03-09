@@ -1,6 +1,6 @@
 import {splitCSSClasses} from "../utils.js";
 
-export default (o, ...a) => {
-	o.forEach(i => splitCSSClasses(a).forEach(c => i.classList.toggle(c)));
-	return o;
+export default (objects, ...args) => {
+	objects.forEach(obj => splitCSSClasses(args).forEach(cssClass => obj.classList.toggle(cssClass)));
+	return objects;
 }

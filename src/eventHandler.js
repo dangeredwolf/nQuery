@@ -1,4 +1,4 @@
-export default (eventName, o, ...a) => {
-	o.forEach(i => a.length === 0 ? i.dispatchEvent(new Event(eventName, ...a)) : i.addEventListener(eventName, ...a));
-	return o;
+export default (eventName, objects, ...args) => {
+	objects.forEach(obj => args.length <= 0 ? obj.dispatchEvent(new Event(eventName, ...args)) : obj.addEventListener(eventName, ...args));
+	return objects;
 }

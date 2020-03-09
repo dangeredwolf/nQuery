@@ -1,5 +1,4 @@
-export default () => {
-	let a = arguments;
+export default (...a) => {
 	let settings = a[1] ? a[1] : a[0];
 
 	if (typeof a[0] === "string") {

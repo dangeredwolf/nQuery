@@ -1,13 +1,13 @@
-export default (o, v) => {
+export default (objects, value) => {
 
-	if (typeof v === "undefined") {
-		return o[0] ? o[0].innerText : undefined;
+	if (typeof value === "undefined") {
+		return objects[0] ? objects[0].innerText : undefined;
 	}
 
-	o.forEach(i => {
-		i.innerText = v;
+	objects.forEach(obj => {
+		obj.innerText = value;
 	});
 
-	return o;
+	return objects;
 
 }

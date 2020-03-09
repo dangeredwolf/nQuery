@@ -1,1 +1,1 @@
-export default o => o[0] ? o[0].offsetWidth : o
+export default objects => objects[0] ? objects[0].offsetWidth : objects
