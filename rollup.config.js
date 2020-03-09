@@ -7,10 +7,13 @@ const production = !process.env.ROLLUP_WATCH;
 
 export default {
 	input: 'src/main.js',
+	preserveModules: false,
 	output: {
 		file: 'nquery.js',
 		format: 'iife', // immediately-invoked function expression — suitable for <script> tags
-		sourcemap: true
+		sourcemap: true,
+		name:"nquery",
+		hoistTransitiveImports: true
 	},
 	plugins: [
 		resolve()

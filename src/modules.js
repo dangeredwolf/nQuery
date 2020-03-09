@@ -7,6 +7,8 @@ let m = [];
 // global
 // globals are accessed by nQuery.X()
 
+// import("./global/ajax.js").then(ajax => m_global.push(ajax))
+
 import ajax from "./global/ajax.js";
 m_global.push(ajax);
 
@@ -40,23 +42,24 @@ import attr from "./element/attr.js";
 m.push(attr);
 
 import eventHandler from "./eventHandler.js";
+let e = eventHandler;
 
-let blur = (...a) => eventHandler("blur", ...a);
+let blur = (...a) => e("blur", ...a);
 m.push(blur);
 
-let click = (...a) => eventHandler("click", ...a);
+let click = (...a) => e("click", ...a);
 m.push(click);
 
-let change = (...a) => eventHandler("change", ...a);
+let change = (...a) => e("change", ...a);
 m.push(change);
 
-let contextmenu = (...a) => eventHandler("contextmenu", ...a);
+let contextmenu = (...a) => e("contextmenu", ...a);
 m.push(contextmenu);
 
 import data from "./element/data.js";
 m.push(data);
 
-let dblclick = (...a) => eventHandler("dblclick", ...a);
+let dblclick = (...a) => e("dblclick", ...a);
 m.push(dblclick);
 
 import each from "./element/each.js";
@@ -74,31 +77,31 @@ m.push(height);
 import hide from "./element/hide.js";
 m.push(hide);
 
-let hover = (...a) => eventHandler("mouseover", ...a);
+let hover = (...a) => e("mouseover", ...a);
 m.push(hover);
 
 import html from "./element/html.js";
 m.push(html);
 
-let mousedown = (...a) => eventHandler("mousedown", ...a);
+let mousedown = (...a) => e("mousedown", ...a);
 m.push(mousedown);
 
-let mouseenter = (...a) => eventHandler("mouseenter", ...a);
+let mouseenter = (...a) => e("mouseenter", ...a);
 m.push(mouseenter);
 
-let mouseleave = (...a) => eventHandler("mouseleave", ...a);
+let mouseleave = (...a) => e("mouseleave", ...a);
 m.push(mouseleave);
 
-let mousemove = (...a) => eventHandler("mousemove", ...a);
+let mousemove = (...a) => e("mousemove", ...a);
 m.push(mousemove);
 
-let mouseout = (...a) => eventHandler("mouseout", ...a);
+let mouseout = (...a) => e("mouseout", ...a);
 m.push(mouseout);
 
-let mouseover = (...a) => eventHandler("mouseover", ...a);
+let mouseover = (...a) => e("mouseover", ...a);
 m.push(mouseover);
 
-let mouseup = (...a) => eventHandler("mouseup", ...a);
+let mouseup = (...a) => e("mouseup", ...a);
 m.push(mouseup);
 
 import on from "./element/on.js";
@@ -110,7 +113,7 @@ m.push(one);
 import off from "./element/off.js";
 m.push(off);
 
-let resize = (...a) => eventHandler("resize", ...a);
+let resize = (...a) => e("resize", ...a);
 m.push(resize);
 m_window.push(resize); // also should work on window
 
@@ -120,7 +123,7 @@ m.push(remove);
 import removeClass from "./element/removeClass.js";
 m.push(removeClass);
 
-let scroll = (...a) => eventHandler("scroll", ...a);
+let scroll = (...a) => e("scroll", ...a);
 m.push(scroll);
 m_window.push(scroll); // also should work on window
 
