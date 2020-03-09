@@ -1,9 +1,9 @@
 import {m, m_document, m_window, m_properties, m_global} from "./modules.js";
 import {normalizeElementArray} from "./utils.js";
-import nQueryObject from "./class/nQueryObject.mjs";
-import nQueryDocument from "./class/nQueryDocument.mjs";
-import nQueryElement from "./class/nQueryElement.mjs";
-import nQueryWindow from "./class/nQueryWindow.mjs";
+import nQueryObject from "./class/nQueryObject.js";
+import nQueryDocument from "./class/nQueryDocument.js";
+import nQueryElement from "./class/nQueryElement.js";
+import nQueryWindow from "./class/nQueryWindow.js";
 
 
 for (let i in m_properties) {

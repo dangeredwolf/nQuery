@@ -7,7 +7,7 @@
         "buildCompat": "rollup -c rollup-compat.config.js",
         "build": "rollup -c",
         "test": "rollup -c",
-        "minify": "uglifyjs -c -m nquery.js --output nquery.min.js"
+        "minify": "uglifyjs nquery.js --ecma 8 -c reduce_funcs=false,reduce_vars=false --output nquery.min.js --source-map content=nquery.js.map,root=src"
     },
     "repository": "https://github.com/dangeredwolf/nanoQuery",
     "author": "dangeredwolf",
