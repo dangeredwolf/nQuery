@@ -80,10 +80,10 @@ nQuery is released under the permissive [MIT license](https://github.com/dangere
 
 If there's a compatibility issue with one of these browsers, please report the issue so we can fix it.
 
-* Chrome 49+ 
-* Microsoft Edge 15+ (And all Chromium versions)
-* Firefox 52+
-* Opera 36+
+* Chrome 60+ 
+* Microsoft Edge 15+
+* Firefox 55+
+* Opera 47+
 * Safari 10+
 * iOS 10+
 * IE support is **not** guaranteed and requires transpilation
