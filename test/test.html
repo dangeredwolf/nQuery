@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<script src="../nquery.min.js"></script>
@@ -28,25 +29,25 @@
 		test1 = {}
 
 		function test1_func() {
-			test1.jQuery = new Benchmark("jQuery", () => {
+			test1.jQuery = new Benchmark("jQuery", function() {
 				jQuery("p").addClass("testclass").removeClass("testclass")
 			});
 
-			test1.nQuery = new Benchmark("nQuery", () => {
+			test1.nQuery = new Benchmark("nQuery", function() {
 				nQuery("p").addClass("testclass").removeClass("testclass")
 			});
 
-			test1.raw = new Benchmark("Raw", () => {
+			test1.raw = new Benchmark("Raw", function() {
 				var p = document.querySelectorAll("p");
-				p.forEach((a) => {
-					a.classList.add("testclass");
-					a.classList.remove("testclass");
-				})
+				for (var i = 0; i < p.length; i++) {
+					p[i].classList.add("testclass");
+					p[i].classList.remove("testclass");
+				}
 			});
-			setTimeout(()=>{test1.jQuery.run()},0);
-			setTimeout(()=>{test1.nQuery.run()},100);
-			setTimeout(()=>{test1.raw.run()},200);
-			setTimeout(()=>{
+			setTimeout(function(){test1.jQuery.run()},0);
+			setTimeout(function(){test1.nQuery.run()},100);
+			setTimeout(function(){test1.raw.run()},200);
+			setTimeout(function(){
 				alert(
 					"Results for test - addClass/removeClass Queries and Calls\n" +
 					"jQuery: " + Math.floor(test1.jQuery.stats.mean * 10000000)/10 + "ns average" +
@@ -57,66 +58,67 @@
 		}
 
 
-				test2 = {}
-				test2.preload = [jQuery("p"),nQuery("p"),document.querySelectorAll("p")];
+		test2 = {}
+		test2.preload = [jQuery("p"),nQuery("p"),document.querySelectorAll("p")];
 
-				function test2_func() {
-					test2.jQuery = new Benchmark("jQuery", () => {
-						test2.preload[0].addClass("testclass").removeClass("testclass")
-					});
+		function test2_func() {
+			test2.jQuery = new Benchmark("jQuery", function() {
+				test2.preload[0].addClass("testclass").removeClass("testclass")
+			});
 
-					test2.nQuery = new Benchmark("nQuery", () => {
-						test2.preload[1].addClass("testclass").removeClass("testclass")
-					});
+			test2.nQuery = new Benchmark("nQuery", function() {
+				test2.preload[1].addClass("testclass").removeClass("testclass")
+			});
 
-					test2.raw = new Benchmark("Raw", () => {
-						var p = test2.preload[2];
-						p.forEach((a) => {
-							a.classList.add("testclass");
-							a.classList.remove("testclass");
-						})
-					});
-					setTimeout(()=>{test2.jQuery.run()},0);
-					setTimeout(()=>{test2.nQuery.run()},100);
-					setTimeout(()=>{test2.raw.run()},200);
-					setTimeout(()=>{
-						alert(
-							"Results for test - addClass/removeClass Calls\n" +
-							"jQuery: " + Math.floor(test2.jQuery.stats.mean * 10000000)/10 + "ns average" +
-							"\nnQuery: " + Math.floor(test2.nQuery.stats.mean * 10000000)/10 + "ns average" +
-							"\nPlain JS: " + Math.floor(test2.raw.stats.mean * 10000000)/10 + "ns average"
-						);
-					},300);
+			test2.raw = new Benchmark("Raw", function() {
+				var p = test2.preload[2];
+				for (var i = 0; i < p.length; i++) {
+					p[i].classList.add("testclass");
+					p[i].classList.remove("testclass");
 				}
+			});
+			setTimeout(function(){test2.jQuery.run()},0);
+			setTimeout(function(){test2.nQuery.run()},100);
+			setTimeout(function(){test2.raw.run()},200);
+			setTimeout(function(){
+				alert(
+					"Results for test - addClass/removeClass Calls\n" +
+					"jQuery: " + Math.floor(test2.jQuery.stats.mean * 10000000)/10 + "ns average" +
+					"\nnQuery: " + Math.floor(test2.nQuery.stats.mean * 10000000)/10 + "ns average" +
+					"\nPlain JS: " + Math.floor(test2.raw.stats.mean * 10000000)/10 + "ns average"
+				);
+			},300);
+		}
 
 
 
-				test3 = {}
+		test3 = {}
 
-				function test3_func() {
-					test3.jQuery = new Benchmark("jQuery", () => {
-						jQuery("p");
-					});
+		function test3_func() {
+			test3.jQuery = new Benchmark("jQuery", function() {
+				jQuery("p");
+			});
 
-					test3.nQuery = new Benchmark("nQuery", () => {
-						nQuery("p");
-					});
+			test3.nQuery = new Benchmark("nQuery", function() {
+				nQuery("p");
+			});
 
-					test3.raw = new Benchmark("Raw", () => {
-						var p = document.querySelectorAll("p");
-					});
-					setTimeout(()=>{test3.jQuery.run()},0);
-					setTimeout(()=>{test3.nQuery.run()},100);
-					setTimeout(()=>{test3.raw.run()},200);
-					setTimeout(()=>{
-						alert(
-							"Results for test - Queries\n" +
-							"jQuery: " + Math.floor(test3.jQuery.stats.mean * 10000000)/10 + "ns average" +
-							"\nnQuery: " + Math.floor(test3.nQuery.stats.mean * 10000000)/10 + "ns average" +
-							"\nPlain JS: " + Math.floor(test3.raw.stats.mean * 10000000)/10 + "ns average"
-						);
-					},300);
-				}
+			test3.raw = new Benchmark("Raw", function() {
+				var p = document.querySelectorAll("p");
+			});
+			setTimeout(function(){test3.jQuery.run()},0);
+			setTimeout(function(){test3.nQuery.run()},100);
+			setTimeout(function(){test3.raw.run()},200);
+			setTimeout(function(){
+				alert(
+					"Results for test - Queries\n" +
+					"jQuery: " + Math.floor(test3.jQuery.stats.mean * 10000000)/10 + "ns average" +
+					"\nnQuery: " + Math.floor(test3.nQuery.stats.mean * 10000000)/10 + "ns average" +
+					"\nPlain JS: " + Math.floor(test3.raw.stats.mean * 10000000)/10 + "ns average"
+				);
+			},300);
+		}
+
 
 		</script>
 	</body>
