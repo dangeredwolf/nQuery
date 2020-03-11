@@ -20,10 +20,12 @@ export function normalizeElementArray(obj) {
 		} else {
 			return renderHTML(obj);
 		}
-	} else {
+	} else if (typeof obj !== "undefined") {
 		console.warn("Someone passed me a non-element object?");
 		console.info(obj);
 		return obj;
+	} else {
+		return [];
 	}
 }
 
