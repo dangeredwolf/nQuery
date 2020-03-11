@@ -4,6 +4,7 @@ import nQueryObject from "./class/nQueryObject.js";
 import nQueryDocument from "./class/nQueryDocument.js";
 import nQueryElement from "./class/nQueryElement.js";
 import nQueryWindow from "./class/nQueryWindow.js";
+import nQueryPromise from "./class/nQueryPromise.js";
 
 
 for (let i in m_properties) {
@@ -75,14 +76,15 @@ document.addEventListener("DOMContentLoaded", () => {
 	nQuery.__ready = true;
 });
 
-window.$ = nQueryInit;
+window.$ = nQuery;
 if (!window.jQuery) {
-	window.jQuery = nQueryInit;
+	window.jQuery = nQuery;
 }
-window.nQuery = nQueryInit;
+window.nQuery = nQuery;
 
 window.nQueryObject = nQueryObject;
 
 window.nQueryDocument = nQueryDocument;
 window.nQueryElement = nQueryElement;
 window.nQueryWindow = nQueryWindow;
+window.nQueryPromise = nQueryPromise;

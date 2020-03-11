@@ -1,49 +1,49 @@
-export default (...a) => {
-	let settings = a[1] ? a[1] : a[0];
+import nQueryPromise from "./../class/nQueryPromise.js";
 
-	if (typeof a[0] === "string") {
-		if (typeof a[1] !== "object") {
-			settings = {url:a[0]}
-		} else {
-			a[1].url = a[0]
-		}
-	}
+export default (...a) => {
+
 	var request = new XMLHttpRequest;
 
-	request.open(settings.method || "GET", settings.url, typeof settings.async === "undefined" ? true : settings.async, settings.username, settings.password);
+	let promise = new nQueryPromise((resolve, reject) => {
+		let settings = a[1] ? a[1] : a[0];
 
-	if (settings.dataType)
-		settings.overrideMimeType(settings.dataType);
-
-	return {
-		done: (func) => {
-			request.addEventListener("load", () => {
-				var res = request.responseText;
-
-				try {
-					res = JSON.parse(res);
-				} catch(e) {}
-
-				func(res);
-			});
-			let str;
-
-			if (request.body) {
-				try {
-					str = JSON.stringify(request.body);
-				} catch(e) {}
+		if (typeof a[0] === "string") {
+			if (typeof a[1] !== "object") {
+				settings = {url:a[0]}
+			} else {
+				settings.url = a[0]
 			}
-
-			request.send(str);
-		},
-		fail:(func) => {
-			request.addEventListener("error", func);
-			request.addEventListener("abort", func);
-		},
-		always:(func) => {
-			request.addEventListener("load", func);
-			request.addEventListener("error", func);
-			request.addEventListener("abort", func);
 		}
-	}
+
+		request.open(settings.method || "GET", settings.url, typeof settings.async === "undefined" ? true : settings.async, settings.username, settings.password);
+
+		if (settings.dataType) {
+			request.overrideMimeType(settings.dataType);
+		}
+
+		request.addEventListener("load", () => {
+			var res = request.responseText;
+
+			try {
+				res = JSON.parse(res);
+			} catch(e) {}
+			resolve(res);
+		});
+
+		request.addEventListener("error", reject);
+		request.addEventListener("abort", reject);
+
+
+		let str;
+
+		if (typeof request.body === "object") {
+			str = JSON.stringify(request.body);
+		} else {
+			str = request.body;
+		}
+
+		request.send(str);
+	});
+
+	return promise;
 }
