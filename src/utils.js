@@ -3,11 +3,23 @@ export function normalizeElementArray(obj) {
 	// don't forget that nQueryObject is an instance of Array
 
 	// https://stackoverflow.com/questions/22289727/difference-between-using-array-isarray-and-instanceof-array
-	if (obj instanceof Array || obj instanceof NodeList || obj instanceof HTMLCollection) {
+	if (obj === null) {
+		return [];
+	} else if (obj instanceof Array || obj instanceof NodeList || obj instanceof HTMLCollection) {
+		if (typeof obj[0] === "string") {
+			return document.querySelectorAll(obj[0]);
+		}
+
 		return obj;
 	} else if (obj instanceof HTMLElement) {
 		obj = [obj];
 		return obj;
+	} else if (typeof obj === "string") {
+		if (object.match(/<.+>/g) === null) {
+			return document.querySelectorAll(obj);
+		} else {
+			return renderHTML(obj);
+		}
 	} else {
 		console.warn("Someone passed me a non-element object?");
 		console.info(obj);
@@ -33,7 +45,18 @@ export function splitCSSClasses(...a) {
 		if (typeof i === "string")
 			r = i.split(" ");
 		else if (i instanceof Array)
-			i.forEach(j => r.push(j))
+			i.forEach(j => r.push(j.split(" ")))
 	});
 	return r;
+}
+
+export function renderHTML(html) {
+	let temp = document.createElement("div");
+	temp.innerHTML = html;
+
+	let object = temp.children;
+
+	temp.remove();
+
+	return object;
 }

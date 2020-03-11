@@ -1,5 +1,5 @@
 import {m, m_document, m_window, m_properties, m_global} from "./modules.js";
-import {normalizeElementArray} from "./utils.js";
+import {normalizeElementArray, renderHTML} from "./utils.js";
 import nQueryObject from "./class/nQueryObject.js";
 import nQueryDocument from "./class/nQueryDocument.js";
 import nQueryElement from "./class/nQueryElement.js";
@@ -26,17 +26,21 @@ for (let i in m_window) {
 	nQueryWindow.prototype[i] = function(...args){return m_window[i].call(this, this, ...args)};
 }
 
+let nQueryInit = (...args) => {nQuery(...args)};
+
 export function nQuery(object) {
 
 	if (typeof object === "string") {
 		if (object.match(/<.+>/g) === null) {
 			object = document.querySelectorAll(object);
 		} else {
-			let temp = document.createElement("div");
-			temp.innerHTML = object;
-			object = temp.children;
-			temp.remove();
+			object = renderHTML(object);
 		}
+	}
+
+	if (typeof object === "function" && typeof nQuery.ready === "function") {
+		nQuery.ready(object);
+		return;
 	}
 
 	if (object instanceof nQueryObject) {
@@ -59,7 +63,6 @@ nQuery.fn = {};
 nQuery.fn.extend = function(exts) {
 	for (let ext in exts) {
 		nQueryObject.prototype[ext] = function() {
-			console.log(this);
 			exts[ext].apply(this, arguments)
 		}
 	}
@@ -72,9 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
 	nQuery.__ready = true;
 });
 
-window.$ = nQuery;
-// window.jQuery = nQuery;
-window.nQuery = nQuery;
+window.$ = nQueryInit;
+if (!window.jQuery) {
+	window.jQuery = nQueryInit;
+}
+window.nQuery = nQueryInit;
 
 window.nQueryObject = nQueryObject;
 
