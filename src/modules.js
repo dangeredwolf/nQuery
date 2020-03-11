@@ -12,6 +12,11 @@ m_global.ajax = ajax;
 
 import ajaxPrefilter from "./global/ajaxPrefilter.js";
 m_global.ajaxPrefilter = ajaxPrefilter;
+m_document.ajaxPrefilter = ajaxPrefilter;
+
+import ajaxSuccess from "./global/ajaxSuccess.js";
+m_global.ajaxSuccess = ajaxSuccess;
+m_document.ajaxSuccess = ajaxSuccess;
 
 import extend from "./global/extend.js";
 m_global.extend = extend;
@@ -25,6 +30,9 @@ m_global.type = type;
 import support from "./global/support.js";
 m_global.support = support;
 
+import when from "./global/when.js";
+m_global.when = when;
+
 // properties
 // Properties apply to nQueryObjects and are static
 
@@ -34,7 +42,7 @@ m_properties["jquery"] = jquery;
 // document
 
 import ready from "./document/ready.js";
-m.ready = ready;
+m_document.ready = ready;
 m_global.ready = ready; // ready is also accessible globally (nQuery.ready)
 
 // element
