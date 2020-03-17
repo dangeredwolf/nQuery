@@ -6,9 +6,7 @@ nQuery is currently in **Alpha**. It is therefore not recommended that you use n
 
 ### N stands for Nano
 
-At less than 5 KB minified, it's way smaller than jQuery 3.4.1's 87 KB size. It makes nQuery viable even for simple webpages.
-
-*(Fun fact: this README file is larger than a minified version of nQuery)*
+At less than 10 KB minified, it's way smaller than jQuery 3.4.1's 87 KB size. It makes nQuery viable even for simple webpages.
 
 ### N stands for Nitro
 
