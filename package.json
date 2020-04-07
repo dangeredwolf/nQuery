@@ -10,8 +10,8 @@
         "buildAndMinifyAll": "npm run buildAndMinify && npm run buildAndMinifyCompat",
         "buildAndMinify": "npm run build && npm run minify",
         "buildAndMinifyCompat": "npm run buildCompat && npm run minifyCompat",
-        "minify": "uglifyjs nquery.js --comments --ecma 8 -c -m reserved=[] --output nquery.min.js --source-map content=nquery.js.map,url=nquery.min.js.map,root=src",
-        "minifyCompat": "uglifyjs nquery.compat.js --comments --ecma 5 -c -m reserved=[] --output nquery.compat.min.js --source-map content=nquery.compat.js.map,url=nquery.compat.min.js.map,root=src"
+        "minify": "uglifyjs out/nquery.js --comments --ecma 8 -c -m reserved=[] --output out/nquery.min.js --source-map content=nquery.js.map,url=nquery.min.js.map,root=src",
+        "minifyCompat": "uglifyjs out/nquery.compat.js --comments --ecma 5 -c -m reserved=[] --output out/nquery.compat.min.js --source-map content=nquery.compat.js.map,url=nquery.compat.min.js.map,root=src"
     },
     "repository": "https://github.com/dangeredwolf/nanoQuery",
     "author": "dangeredwolf",

@@ -9,7 +9,7 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
 	input: 'src/main.js',
 	output: {
-		file: 'nquery.compat.js',
+		file: 'out/nquery.compat.js',
 		format: 'iife', // immediately-invoked function expression — suitable for <script> tags
 		sourcemap: true
 	},

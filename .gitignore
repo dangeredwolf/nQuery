@@ -3,14 +3,7 @@ lib
 
 # nquery output files
 
-nquery.min.js
-nquery.min.js.map
-nquery.js.map
-nquery.js
-nquery.compat.js.map
-nquery.compat.js
-nquery.compat.min.js.map
-nquery.compat.min.js
+out
 
 # Logs
 logs
