@@ -86,7 +86,7 @@ If there's a compatibility issue with one of these browsers, please report the i
 * iOS 10+
 * IE support is **not** guaranteed and requires transpilation
 
-If IE11 compatibility is a must, you can transpile to ES5 using Babel (use `npm run babel`). However, you negate some of the file size and performance benefits. While we will make reasonable efforts to make sure it works with IE11, support is *not* guaranteed with babel or browsers not listed above.
+If IE11 compatibility is a must, you can transpile to ES5 using Babel (use `npm run babel`). However, you negate some of the file size and performance benefits. While we will make reasonable efforts to make sure it works with IE11, support is *not* guaranteed with browsers not listed above.
 
 ### Building / Testing
 
