@@ -14,7 +14,7 @@ export default (objects, css, value) => {
 			let results = {};
 			let compStyles = getComputedStyle(objects[0]);
 
-			css.forEach(property => {
+			css?.forEach(property => {
 				results[property] = compStyles.getPropertyValue(property);
 			});
 

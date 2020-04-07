@@ -1,7 +1,7 @@
 export default (objects, value) => {
 
 	if (typeof value === "undefined") {
-		return objects[0] ? objects[0].innerText : undefined;
+		return objects[0]?.innerText;
 	}
 
 	objects.forEach(obj => {

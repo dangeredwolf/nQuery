@@ -1,6 +1,6 @@
 export default (objects, attr, value) => {
 	let attrObject = {};
-	let useValue = !!value;
+	let useValue = typeof value !== "undefined";
 
 	if (typeof attr === "object") {
 		attrObject = attr;
@@ -19,6 +19,8 @@ export default (objects, attr, value) => {
 			return objects[0].getAttribute(attr) || undefined;
 		}
 	}
+
+	console.log(objects);
 
 	return objects;
 }

@@ -1,15 +1,17 @@
 {
     "name": "nQuery",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "A small, highly modular alternative to jQuery",
     "scripts": {
         "babel": "babel nquery.js -o nquery.compat.js",
         "buildCompat": "rollup -c rollup-compat.config.js",
         "build": "rollup -c",
         "test": "rollup -c",
+        "buildAndMinifyAll": "npm run buildAndMinify && npm run buildAndMinifyCompat",
         "buildAndMinify": "npm run build && npm run minify",
-        "minify": "uglifyjs nquery.js --ecma 8 -c -m reserved=['nQueryPromise','nQueryObject','nQueryDocument','nQueryElement','nQueryWindow'] --output nquery.min.js --source-map content=nquery.js.map,root=src",
-        "minifyCompat": "uglifyjs nquery.compat.js --ecma 5 -c -m reserved=['nQueryPromise','nQueryObject','nQueryDocument','nQueryElement','nQueryWindow'] --output nquery.compat.min.js --source-map content=nquery.compat.js.map,root=src"
+        "buildAndMinifyCompat": "npm run buildCompat && npm run minifyCompat",
+        "minify": "uglifyjs nquery.js --comments --ecma 8 -c -m reserved=[] --output nquery.min.js --source-map content=nquery.js.map,url=nquery.min.js.map,root=src",
+        "minifyCompat": "uglifyjs nquery.compat.js --comments --ecma 5 -c -m reserved=[] --output nquery.compat.min.js --source-map content=nquery.compat.js.map,url=nquery.compat.min.js.map,root=src"
     },
     "repository": "https://github.com/dangeredwolf/nanoQuery",
     "author": "dangeredwolf",
@@ -17,11 +19,12 @@
     "devDependencies": {
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.7",
+        "@babel/plugin-proposal-optional-chaining": "^7.8.3",
         "@babel/plugin-transform-arrow-functions": "^7.8.3",
         "@babel/plugin-transform-block-scoping": "^7.8.3",
         "@babel/plugin-transform-classes": "^7.8.6",
         "@babel/plugin-transform-function-name": "^7.8.3",
-        "@babel/plugin-transform-parameters": "^7.8.7",
+        "@babel/plugin-transform-parameters": "^7.8.8",
         "@babel/plugin-transform-runtime": "^7.8.3",
         "@babel/plugin-transform-spread": "^7.8.3",
         "@babel/preset-env": "^7.8.7",

@@ -1,1 +1,1 @@
-export default objects => objects[0].previousElementSibling
+export default objects => objects[0]?.previousElementSibling

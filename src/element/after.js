@@ -1,4 +1,6 @@
+import {normalizeElementArray} from "../utils.js";
+
 export default (objects, ...elements) => {
-	elements.forEach(element => objects[0].insertAdjacentElement('afterend', element));
+	normalizeElementArray(elements).forEach(element => {objects[0]?.insertAdjacentElement('afterend', element)});
 	return objects;
 }

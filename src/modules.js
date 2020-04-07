@@ -1,3 +1,7 @@
+import eventHandler from "./eventHandler.js";
+let e = eventHandler;
+import handler from "./addEventHandler.js";
+
 let m_window = [];
 let m_document = [];
 let m_properties = {};
@@ -53,6 +57,9 @@ m.add = add;
 import addClass from "./element/addClass.js";
 m.addClass = addClass;
 
+import after from "./element/after.js";
+m.after = after;
+
 import append from "./element/append.js";
 m.append = append;
 
@@ -62,14 +69,10 @@ m.attr = attr;
 import children from "./element/children.js";
 m.children = children;
 
-import eventHandler from "./eventHandler.js";
-let e = eventHandler;
-
-m.blur = (...a) => e("blur", ...a);
-m.click = (...a) => e("click", ...a);
-m.change = (...a) => e("change", ...a);
-
-m.contextmenu = (...a) => e("contextmenu", ...a);
+handler(m, "blur");
+handler(m, "click");
+handler(m, "change");
+handler(m, "contextmenu");
 
 import css from "./element/css.js";
 m.css = css;
@@ -77,7 +80,7 @@ m.css = css;
 import data from "./element/data.js";
 m.data = data;
 
-m.dblclick = (...a) => e("dblclick", ...a);
+handler(m, "dblclick");
 
 import each from "./element/each.js";
 m.each = each;
@@ -97,8 +100,7 @@ m.height = height;
 import hide from "./element/hide.js";
 m.hide = hide;
 
-let hover = (...a) => e("mouseover", ...a);
-m.hover = hover;
+handler(m, "hover");
 
 import html from "./element/html.js";
 m.html = html;
@@ -110,13 +112,13 @@ import is from "./element/is.js";
 m.is = is;
 m_window.is = is;
 
-m.mousedown = (...a) => e("mousedown", ...a);
-m.mouseenter = (...a) => e("mouseenter", ...a);
-m.mouseleave = (...a) => e("mouseleave", ...a);
-m.mousemove = (...a) => e("mousemove", ...a);
-m.mouseout = (...a) => e("mouseout", ...a);
-m.mouseover = (...a) => e("mouseover", ...a);
-m.mouseup = (...a) => e("mouseup", ...a);
+handler(m, "mousedown");
+handler(m, "mouseenter");
+handler(m, "mouseleave");
+handler(m, "mousemove");
+handler(m, "mouseout");
+handler(m, "mouseover");
+handler(m, "mouseup");
 
 import next from "./element/next.js";
 m.next = next;
@@ -137,6 +139,8 @@ m_window.one = one;
 
 import off from "./element/off.js";
 m.off = off;
+m_document.off = off;
+m_window.off = off;
 
 import outerHeight from "./element/outerHeight.js";
 m.outerHeight = outerHeight;
@@ -159,9 +163,8 @@ m.prepend = prepend;
 import prev from "./element/prev.js";
 m.prev = prev;
 
-let resize = (...a) => e("resize", ...a);
-m.resize = resize;
-m_window.resize = resize; // also should work on window
+handler(m, "resize");
+handler(m_window, "resize"); // also should work on window
 
 import remove from "./element/remove.js";
 m.remove = remove;
@@ -175,9 +178,8 @@ m.removeClass = removeClass;
 import replaceWith from "./element/replaceWith.js";
 m.replaceWith = replaceWith;
 
-let scroll = (...a) => e("scroll", ...a);
-m.scroll = scroll;
-m_window.scroll = scroll; // also should work on window
+handler(m, "scroll");
+handler(m_window, "scroll"); // also should work on window
 
 import show from "./element/show.js";
 m.show = show;
@@ -190,6 +192,11 @@ m.text = text;
 
 import toggleClass from "./element/toggleClass.js";
 m.toggleClass = toggleClass;
+
+import trigger from "./element/trigger.js";
+m.trigger = trigger;
+m_window.trigger = trigger; // also should work on window
+m_document.trigger = trigger; // also should work on window
 
 import width from "./element/width.js";
 m.width = width;

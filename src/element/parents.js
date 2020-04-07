@@ -5,7 +5,7 @@ export default (objects, matches) => {
 
 	let obj = objects[0];
 
-	while (obj.nodeName !== "HTML" && obj !== null) {
+	while (obj && obj.nodeName !== "HTML") {
 		results.push(obj);
 		obj = obj.parentElement;
 	}
