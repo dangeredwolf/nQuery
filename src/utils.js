@@ -26,7 +26,7 @@ export function normalizeElementArray(obj) {
 			return renderHTML(obj);
 		}
 	} else if (typeof obj !== "undefined") {
-		console.warn("Someone passed me a non-element object?");
+		console.warn("nQuery Warning: nQuery was passed an unrecognised data type. The data we received is output using console.info.");
 		console.info(obj);
 		return [obj];
 	}
@@ -46,14 +46,17 @@ export function assert(statement, customErr) {
 }
 
 export function splitCSSClasses(...a) {
-	let r = [];
-	a.forEach(i => {
-		if (typeof i === "string")
-			r = i.split(" ");
-		else if (i instanceof Array)
-			i.forEach(j => r.push(j.split(" ")))
-	});
-	return r;
+	let result = [];
+
+	for (let i in a) {
+		if (typeof a[i] === "string")
+			a[i].split(" ").forEach(cssClass => result.push(cssClass));
+		else if (a[i] instanceof Array)
+			for (let j in a[i]) {
+				a[i][j].split(" ").forEach(cssClass => result.push(cssClass))
+			}
+	}
+	return result;
 }
 
 export function renderHTML(html) {

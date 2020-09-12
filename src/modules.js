@@ -22,6 +22,9 @@ import ajaxSuccess from "./global/ajaxSuccess.js";
 m_global.ajaxSuccess = ajaxSuccess;
 m_document.ajaxSuccess = ajaxSuccess;
 
+import Deferred from "./global/Deferred.js";
+m_global.Deferred = Deferred;
+
 import extend from "./global/extend.js";
 m_global.extend = extend;
 
@@ -41,7 +44,7 @@ m_global.when = when;
 // Properties apply to nQueryObjects and are static
 
 import jquery from "./properties/jquery.js";
-m_properties["jquery"] = jquery;
+m_properties.jquery = jquery;
 
 // document
 
@@ -180,6 +183,9 @@ m.replaceWith = replaceWith;
 
 handler(m, "scroll");
 handler(m_window, "scroll"); // also should work on window
+
+import scrollTop from "./element/scrollTop.js";
+m.scrollTop = scrollTop;
 
 import show from "./element/show.js";
 m.show = show;

@@ -4,7 +4,9 @@ export default (objects, tag, value) => {
 		return objects[0]?.getAttribute("data-" + tag);
 	}
 
-	objects.forEach(obj => obj?.setAttribute("data-" + tag, value));
+	for (let i = 0; i < objects.length; i++) {
+		objects[i].setAttribute("data-" + tag, value)
+	}
 
 	return objects;
 

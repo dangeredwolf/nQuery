@@ -1,4 +1,5 @@
 export default objects => {
-	objects.forEach(obj => obj?.remove());
+	for (let i = 0; i < objects.length; i++)
+		obj.remove();
 	return objects;
 }

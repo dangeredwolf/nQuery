@@ -1,5 +1,5 @@
 import {m, m_document, m_window, m_properties, m_global} from "./modules.js";
-import {normalizeElementArray, renderHTML} from "./utils.js";
+import {normalizeElementArray, renderHTML, splitCSSClasses} from "./utils.js"; // splitCSSClasses is only used for __debugMethods
 import nQueryObject from "./class/nQueryObject.js";
 import nQueryDocument from "./class/nQueryDocument.js";
 import nQueryElement from "./class/nQueryElement.js";
@@ -27,7 +27,7 @@ for (let i in m_window) {
 	nQueryWindow.prototype[i] = function(...args){return m_window[i].call(this, this, ...args)};
 }
 
-let nQueryInit = (...args) => {nQuery(...args)};
+let nQueryInit = (...args) => nQuery(...args);
 
 export function nQuery(object) {
 
@@ -57,30 +57,36 @@ export function nQuery(object) {
 
 }
 
-nQuery.__internal_r = [];
-
-nQuery.fn = {};
-
-nQuery.fn.extend = function(exts) {
-	for (let ext in exts) {
-		nQueryObject.prototype[ext] = function() {
-			exts[ext].apply(this, arguments)
-		}
-	}
+nQueryInit.__debugMethods = {
+	normalizeElementArray:normalizeElementArray,
+	renderHTML:renderHTML,
+	splitCSSClasses:splitCSSClasses
 }
 
+nQueryInit.__internal_r = [];
+
+// nQuery.fn = {};
+
+// nQuery.fn.extend = function(exts) {
+// 	for (let ext in exts) {
+// 		nQueryObject.prototype[ext] = function() {
+// 			exts[ext].apply(this, arguments)
+// 		}
+// 	}
+// }
+
 document.addEventListener("DOMContentLoaded", () => {
-	nQuery.__internal_r.forEach(f => {
-		f();
-	});
+	for (let i = 0; i < window.nQuery.__internal_r.length; i++) {
+		(nQuery.__internal_r[i])();
+	}
 	nQuery.__ready = true;
 });
 
-window.$ = nQuery;
-if (!window.jQuery) {
-	window.jQuery = nQuery;
-}
-window.nQuery = nQuery;
+// window.$ = nQuery;
+// if (!window.jQuery) {
+// 	window.jQuery = nQuery;
+// }
+window.nQuery = nQueryInit;
 
 window.nQueryObject = nQueryObject;
 
