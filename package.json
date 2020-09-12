@@ -3,12 +3,9 @@
     "version": "0.4.0",
     "description": "A small, highly modular alternative to jQuery",
     "scripts": {
-        "babel": "babel nquery.js -o nquery.compat.js",
         "build": "rollup -c",
-        "test": "npm run buildAndMinifyAll",
-        "buildAndMinifyAll": "npm run buildAndMinify",
-        "buildAndMinify": "npm run build && npm run minify",
-        "minify": "terser out/nquery.js --comments --ecma 8 -c -m reserved=[] --output out/nquery.min.js --source-map content=nquery.js.map,url=nquery.min.js.map,root=src"
+        "start": "rollup -c",
+        "test": "rollup -c"
     },
     "repository": "https://github.com/dangeredwolf/nQuery",
     "author": "dangeredwolf",

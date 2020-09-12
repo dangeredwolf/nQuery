@@ -11,13 +11,23 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
 	input: 'src/main.js',
 	preserveModules: false,
-	output: {
-		file: 'out/nquery.js',
-		format: 'iife', // immediately-invoked function expression — suitable for <script> tags
-		sourcemap: true,
-		banner: `/**\n* nQuery ${require('./package.json').version}\n* @license MIT\n* https://github.com/dangeredwolf/nQuery\n**/`,
-		hoistTransitiveImports: true
-	},
+	output: [
+		{
+			file: 'out/nquery.js',
+			format: 'iife', // immediately-invoked function expression — suitable for <script> tags
+			sourcemap: true,
+			banner: `/**\n* nQuery ${require('./package.json').version}\n* @license MIT\n* https://github.com/dangeredwolf/nQuery\n**/`,
+			hoistTransitiveImports: true
+		},
+		{
+			file: 'out/nquery.min.js',
+			format: 'iife', // immediately-invoked function expression — suitable for <script> tags
+			sourcemap: true,
+			banner: `/**\n* nQuery ${require('./package.json').version}\n* @license MIT\n* https://github.com/dangeredwolf/nQuery\n**/`,
+			hoistTransitiveImports: true,
+			plugins: [terser()]
+		}
+	],
 	plugins: [
 		resolve(),
 		babel()
