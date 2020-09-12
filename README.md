@@ -68,7 +68,7 @@ nQuery can act as a drop-in replacement for jQuery in simple applications.
 
 nQuery is built with modern browser features in mind.
 
-By default, nQuery requires a JavaScript engine that supports basic ECMAScript 2015 features. (Arrow functions, classes).
+nQuery requires a JavaScript engine that supports ECMAScript 2015 features. (Arrow functions, classes).
 
 ### nQuery is free and open source software
 
@@ -84,9 +84,8 @@ If there's a compatibility issue with one of these browsers, please report the i
 * Opera 47+
 * Safari 10+
 * iOS 10+
-* IE support is **not** guaranteed and requires transpilation
 
-If IE11 compatibility is a must, you can transpile to ES5 using Babel (use `npm run babel`). However, you negate some of the file size and performance benefits. While we will make reasonable efforts to make sure it works with IE11, support is *not* guaranteed with browsers not listed above.
+Effective 2020-09-12 (version 0.4.0), Internet Explorer is not supported in any way.
 
 ### Building / Testing
 
@@ -97,8 +96,6 @@ nQuery does not have runtime dependencies, only dev dependencies.
 Build using `npm run build` (generates `nquery.js` file)
 
 Minify for production using `npm run minify` (generates `nquery.min.js` file)
-
-If you need to build an IE-compatible version, use `npm run babel`.
 
 ---------------------
 
