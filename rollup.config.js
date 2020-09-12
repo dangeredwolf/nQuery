@@ -25,7 +25,12 @@ export default {
 			sourcemap: true,
 			banner: `/**\n* nQuery ${require('./package.json').version}\n* @license MIT\n* https://github.com/dangeredwolf/nQuery\n**/`,
 			hoistTransitiveImports: true,
-			plugins: [terser()]
+			plugins: [terser({
+				mangle: {
+					reserved:["nQueryInit", "nQueryObject", "nQueryDocument", "nQueryElement", "nQueryWindow", "nQueryPromise"]
+				},
+				ecma: 8
+			})]
 		}
 	],
 	plugins: [
