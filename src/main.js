@@ -5,6 +5,7 @@ import nQueryDocument from "./class/nQueryDocument.js";
 import nQueryElement from "./class/nQueryElement.js";
 import nQueryWindow from "./class/nQueryWindow.js";
 import nQueryPromise from "./class/nQueryPromise.js";
+import version from "./version.js";
 
 for (let i in objectModules) {
 	nQueryObject.prototype[i] = objectModules[i];
@@ -26,8 +27,6 @@ for (let i in windowModules) {
 	nQueryWindow.prototype[i] = function(...args){return windowModules[i].call(this, this, ...args)};
 }
 
-let nQueryInit = (...args) => nQuery(...args);
-
 export function nQuery(object) {
 
 	if (typeof object === "string") {
@@ -46,9 +45,9 @@ export function nQuery(object) {
 	if (object instanceof nQueryObject) {
 		return object;
 	} else if (object instanceof Document) {
-		return new nQueryDocument(object);
+		return new nQueryDocument([object]);
 	} else if (object instanceof Window) {
-		return new nQueryWindow(object);
+		return new nQueryWindow([object]);
 	} else {
 		return new nQueryElement(normalizeElementArray(object));
 
@@ -56,13 +55,15 @@ export function nQuery(object) {
 
 }
 
-nQueryInit.__debugMethods = {
+nQuery.toString = () => "nQuery " + version;
+
+nQuery.__debugMethods = {
 	normalizeElementArray:normalizeElementArray,
 	renderHTML:renderHTML,
 	splitCSSClasses:splitCSSClasses
 }
 
-nQueryInit.__internal_r = [];
+nQuery.__internal_r = [];
 
 // nQuery.fn = {};
 
@@ -89,7 +90,7 @@ if (config.usejQuery && !window.jQuery) {
 	window.jQuery = nQuery;
 }
 
-window.nQuery = nQueryInit;
+window.nQuery = nQuery;
 
 window.nQueryObject = nQueryObject;
 
