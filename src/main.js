@@ -1,4 +1,4 @@
-import {m, m_document, m_window, m_properties, m_global} from "./../nquery.modules.js";
+import {elementModules, documentModules, windowModules, objectModules, globalModules} from "./../nquery.modules.js";
 import {normalizeElementArray, renderHTML, splitCSSClasses} from "./utils.js"; // splitCSSClasses is only used for __debugMethods
 import nQueryObject from "./class/nQueryObject.js";
 import nQueryDocument from "./class/nQueryDocument.js";
@@ -6,25 +6,24 @@ import nQueryElement from "./class/nQueryElement.js";
 import nQueryWindow from "./class/nQueryWindow.js";
 import nQueryPromise from "./class/nQueryPromise.js";
 
-
-for (let i in m_properties) {
-	nQueryObject.prototype[i] = m_properties[i];
+for (let i in objectModules) {
+	nQueryObject.prototype[i] = objectModules[i];
 }
 
-for (let i in m_global) {
-	nQuery[i] = function(...args){return m_global[i].call(this, ...args)};
+for (let i in globalModules) {
+	nQuery[i] = function(...args){return globalModules[i].call(this, ...args)};
 }
 
-for (let i in m) {
-	nQueryElement.prototype[i] = function(...args){return m[i].call(this, this, ...args)};
+for (let i in elementModules) {
+	nQueryElement.prototype[i] = function(...args){return elementModules[i].call(this, this, ...args)};
 }
 
-for (let i in m_document) {
-	nQueryDocument.prototype[i] = function(...args){return m_document[i].call(this, this, ...args)};
+for (let i in documentModules) {
+	nQueryDocument.prototype[i] = function(...args){return documentModules[i].call(this, this, ...args)};
 }
 
-for (let i in m_window) {
-	nQueryWindow.prototype[i] = function(...args){return m_window[i].call(this, this, ...args)};
+for (let i in windowModules) {
+	nQueryWindow.prototype[i] = function(...args){return windowModules[i].call(this, this, ...args)};
 }
 
 let nQueryInit = (...args) => nQuery(...args);

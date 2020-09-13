@@ -1,210 +1,214 @@
-import eventHandler from "./src/eventHandler.js";
-let e = eventHandler;
+/*
+	nQuery Modules List
+
+	This is where you can add modules to be compiled directly into the nQuery source.
+*/
+
+
 import handler from "./src/addEventHandler.js";
 
-let m_window = [];
-let m_document = [];
-let m_properties = {};
-let m_global = [];
-let m = [];
+let windowModules = []; // Modules for Window objects
+let documentModules = []; // Modules for Document objects
+let objectModules = []; // Modules accessible from any nQueryObject (but not global)
+let globalModules = []; // Modules accessible via window.$ / window.nQuery
+let elementModules = []; // Modules accessible from Element objects
 
-// global
+// Global modules
 // globals are accessed by nQuery.X()
 
 import ajax from "./src/global/ajax.js";
-m_global.ajax = ajax;
+globalModules.ajax = ajax;
 
 import ajaxPrefilter from "./src/global/ajaxPrefilter.js";
-m_global.ajaxPrefilter = ajaxPrefilter;
-m_document.ajaxPrefilter = ajaxPrefilter;
+globalModules.ajaxPrefilter = ajaxPrefilter;
+documentModules.ajaxPrefilter = ajaxPrefilter;
 
 import ajaxSuccess from "./src/global/ajaxSuccess.js";
-m_global.ajaxSuccess = ajaxSuccess;
-m_document.ajaxSuccess = ajaxSuccess;
+globalModules.ajaxSuccess = ajaxSuccess;
+documentModules.ajaxSuccess = ajaxSuccess;
 
 import Deferred from "./src/global/Deferred.js";
-m_global.Deferred = Deferred;
+globalModules.Deferred = Deferred;
 
 import extend from "./src/global/extend.js";
-m_global.extend = extend;
+globalModules.extend = extend;
 
 import now from "./src/global/now.js";
-m_global.now = now;
+globalModules.now = now;
 
 import type from "./src/global/type.js";
-m_global.type = type;
+globalModules.type = type;
 
 import support from "./src/global/support.js";
-m_global.support = support;
+globalModules.support = support;
 
 import when from "./src/global/when.js";
-m_global.when = when;
+globalModules.when = when;
 
-// properties
-// Properties apply to nQueryObjects and are static
+// Object modules
 
 import jquery from "./src/properties/jquery.js";
-m_properties.jquery = jquery;
+objectModules.jquery = jquery;
 
-// document
+// Document modules
 
 import ready from "./src/document/ready.js";
-m_document.ready = ready;
-m_global.ready = ready; // ready is also accessible globally (nQuery.ready)
+documentModules.ready = ready;
+globalModules.ready = ready; // ready is also accessible globally (nQuery.ready)
 
-// element
+// Element modules
 
 import add from "./src/element/add.js";
-m.add = add;
+elementModules.add = add;
 
 import addClass from "./src/element/addClass.js";
-m.addClass = addClass;
+elementModules.addClass = addClass;
 
 import after from "./src/element/after.js";
-m.after = after;
+elementModules.after = after;
 
 import append from "./src/element/append.js";
-m.append = append;
+elementModules.append = append;
 
 import attr from "./src/element/attr.js";
-m.attr = attr;
+elementModules.attr = attr;
 
 import children from "./src/element/children.js";
-m.children = children;
+elementModules.children = children;
 
-handler(m, "blur");
-handler(m, "click");
-handler(m, "change");
-handler(m, "contextmenu");
+handler(elementModules, "blur");
+handler(elementModules, "click");
+handler(elementModules, "change");
+handler(elementModules, "contextmenu");
 
 import css from "./src/element/css.js";
-m.css = css;
+elementModules.css = css;
 
 import data from "./src/element/data.js";
-m.data = data;
+elementModules.data = data;
 
-handler(m, "dblclick");
+handler(elementModules, "dblclick");
 
 import each from "./src/element/each.js";
-m.each = each;
+elementModules.each = each;
 
 import find from "./src/element/find.js";
-m.find = find;
+elementModules.find = find;
 
 import first from "./src/element/first.js";
-m.first = first;
+elementModules.first = first;
 
 import hasClass from "./src/element/hasClass.js";
-m.hasClass = hasClass;
+elementModules.hasClass = hasClass;
 
 import height from "./src/element/height.js";
-m.height = height;
+elementModules.height = height;
 
 import hide from "./src/element/hide.js";
-m.hide = hide;
+elementModules.hide = hide;
 
-handler(m, "hover");
+handler(elementModules, "hover");
 
 import html from "./src/element/html.js";
-m.html = html;
+elementModules.html = html;
 
 import insertBefore from "./src/element/insertBefore.js";
-m.insertBefore = insertBefore;
+elementModules.insertBefore = insertBefore;
 
 import is from "./src/element/is.js";
-m.is = is;
-m_window.is = is;
+elementModules.is = is;
+windowModules.is = is;
 
-handler(m, "mousedown");
-handler(m, "mouseenter");
-handler(m, "mouseleave");
-handler(m, "mousemove");
-handler(m, "mouseout");
-handler(m, "mouseover");
-handler(m, "mouseup");
+handler(elementModules, "mousedown");
+handler(elementModules, "mouseenter");
+handler(elementModules, "mouseleave");
+handler(elementModules, "mousemove");
+handler(elementModules, "mouseout");
+handler(elementModules, "mouseover");
+handler(elementModules, "mouseup");
 
 import next from "./src/element/next.js";
-m.next = next;
+elementModules.next = next;
 
 import on from "./src/element/on.js";
-m.on = on;
-m_document.on = on;
-m_window.on = on;
+elementModules.on = on;
+documentModules.on = on;
+windowModules.on = on;
 // alias for legacy "bind"
-m.bind = on;
-m_document.bind = on;
-m_window.bind = on;
+elementModules.bind = on;
+documentModules.bind = on;
+windowModules.bind = on;
 
 import one from "./src/element/one.js";
-m.one = one;
-m_document.one = one;
-m_window.one = one;
+elementModules.one = one;
+documentModules.one = one;
+windowModules.one = one;
 
 import off from "./src/element/off.js";
-m.off = off;
-m_document.off = off;
-m_window.off = off;
+elementModules.off = off;
+documentModules.off = off;
+windowModules.off = off;
 
 import outerHeight from "./src/element/outerHeight.js";
-m.outerHeight = outerHeight;
+elementModules.outerHeight = outerHeight;
 
 import outerWidth from "./src/element/outerWidth.js";
-m.outerWidth = outerWidth;
+elementModules.outerWidth = outerWidth;
 
 import parents from "./src/element/parents.js";
-m.parents = parents;
+elementModules.parents = parents;
 
 import parent from "./src/element/parent.js";
-m.parent = parent;
+elementModules.parent = parent;
 
 import position from "./src/element/position.js";
-m.position = position;
+elementModules.position = position;
 
 import prepend from "./src/element/prepend.js";
-m.prepend = prepend;
+elementModules.prepend = prepend;
 
 import prev from "./src/element/prev.js";
-m.prev = prev;
+elementModules.prev = prev;
 
-handler(m, "resize");
-handler(m_window, "resize"); // also should work on window
+handler(elementModules, "resize");
+handler(windowModules, "resize"); // also should work on window
 
 import remove from "./src/element/remove.js";
-m.remove = remove;
+elementModules.remove = remove;
 
 import removeAttr from "./src/element/removeAttr.js";
-m.removeAttr = removeAttr;
+elementModules.removeAttr = removeAttr;
 
 import removeClass from "./src/element/removeClass.js";
-m.removeClass = removeClass;
+elementModules.removeClass = removeClass;
 
 import replaceWith from "./src/element/replaceWith.js";
-m.replaceWith = replaceWith;
+elementModules.replaceWith = replaceWith;
 
-handler(m, "scroll");
-handler(m_window, "scroll"); // also should work on window
+handler(elementModules, "scroll");
+handler(windowModules, "scroll"); // also should work on window
 
 import scrollTop from "./src/element/scrollTop.js";
-m.scrollTop = scrollTop;
+elementModules.scrollTop = scrollTop;
 
 import show from "./src/element/show.js";
-m.show = show;
+elementModules.show = show;
 
 import siblings from "./src/element/siblings.js";
-m.siblings = siblings;
+elementModules.siblings = siblings;
 
 import text from "./src/element/text.js";
-m.text = text;
+elementModules.text = text;
 
 import toggleClass from "./src/element/toggleClass.js";
-m.toggleClass = toggleClass;
+elementModules.toggleClass = toggleClass;
 
 import trigger from "./src/element/trigger.js";
-m.trigger = trigger;
-m_window.trigger = trigger; // also should work on window
-m_document.trigger = trigger; // also should work on window
+elementModules.trigger = trigger;
+windowModules.trigger = trigger; // also should work on window
+documentModules.trigger = trigger; // also should work on window
 
 import width from "./src/element/width.js";
-m.width = width;
+elementModules.width = width;
 
-export {m, m_document, m_window, m_properties, m_global}
+export {elementModules, documentModules, windowModules, objectModules, globalModules}
