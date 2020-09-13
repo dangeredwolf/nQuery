@@ -77,9 +77,9 @@ nQueryInit.__internal_r = [];
 
 document.addEventListener("DOMContentLoaded", () => {
 	for (let i = 0; i < window.nQuery.__internal_r.length; i++) {
-		(nQuery.__internal_r[i])();
+		(window.nQuery.__internal_r[i])();
 	}
-	nQuery.__ready = true;
+	window.nQuery.__ready = true;
 });
 
 window.$ = nQuery;
