@@ -89,13 +89,11 @@ Effective 2020-09-12 (version 0.4.0), Internet Explorer is not supported in any 
 
 ### Building / Testing
 
-We build using [Node.js](https://nodejs.org/en/). A recent Current or LTS version should work fine.
+nQuery is built using [Node.js](https://nodejs.org/en/). A recent Current or LTS version should work fine.
 
 nQuery does not have runtime dependencies, only dev dependencies.
 
-Build using `npm run build` (generates `nquery.js` file)
-
-Minify for production using `npm run minify` (generates `nquery.min.js` file)
+Build using `npm run build` or `npm start` (generates `nquery.js` and `nquery.min.js` file)
 
 ---------------------
 

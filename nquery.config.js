@@ -30,6 +30,10 @@ let elementModules = []; // Modules accessible from Element objects
 import ajax from "./src/global/ajax.js";
 globalModules.ajax = ajax;
 
+import ajaxComplete from "./src/global/ajaxComplete.js";
+globalModules.ajaxComplete = ajaxComplete;
+documentModules.ajaxComplete = ajaxComplete;
+
 import ajaxPrefilter from "./src/global/ajaxPrefilter.js";
 globalModules.ajaxPrefilter = ajaxPrefilter;
 documentModules.ajaxPrefilter = ajaxPrefilter;
@@ -41,11 +45,17 @@ documentModules.ajaxSuccess = ajaxSuccess;
 import Deferred from "./src/global/Deferred.js";
 globalModules.Deferred = Deferred;
 
+import eachGlobal from "./src/global/each.js";
+globalModules.each = eachGlobal;
+
 import extend from "./src/global/extend.js";
 globalModules.extend = extend;
 
 import now from "./src/global/now.js";
 globalModules.now = now;
+
+import trim from "./src/global/trim.js";
+globalModules.trim = trim;
 
 import type from "./src/global/type.js";
 globalModules.type = type;
@@ -114,6 +124,8 @@ elementModules.hasClass = hasClass;
 
 import height from "./src/element/height.js";
 elementModules.height = height;
+windowModules.height = height;
+documentModules.height = height;
 
 import hide from "./src/element/hide.js";
 elementModules.hide = hide;
@@ -221,5 +233,7 @@ documentModules.trigger = trigger; // also should work on window
 
 import width from "./src/element/width.js";
 elementModules.width = width;
+windowModules.width = width;
+documentModules.width = width;
 
 export {elementModules, documentModules, windowModules, objectModules, globalModules, config}

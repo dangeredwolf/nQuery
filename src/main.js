@@ -5,6 +5,7 @@ import nQueryDocument from "./class/nQueryDocument.js";
 import nQueryElement from "./class/nQueryElement.js";
 import nQueryWindow from "./class/nQueryWindow.js";
 import nQueryPromise from "./class/nQueryPromise.js";
+import nQueryPlugins from "./class/nQueryPlugins.js";
 import version from "./version.js";
 
 for (let i in objectModules) {
@@ -42,14 +43,14 @@ export function nQuery(object) {
 		return;
 	}
 
-	if (object instanceof nQueryObject) {
+	if (object instanceof window.nQueryObject) {
 		return object;
 	} else if (object instanceof Document) {
-		return new nQueryDocument([object]);
+		return new window.nQueryDocument([object]);
 	} else if (object instanceof Window) {
-		return new nQueryWindow([object]);
+		return new window.nQueryWindow([object]);
 	} else {
-		return new nQueryElement(normalizeElementArray(object));
+		return new window.nQueryElement(normalizeElementArray(object));
 
 	}
 
@@ -65,15 +66,7 @@ nQuery.__debugMethods = {
 
 nQuery.__internal_r = [];
 
-// nQuery.fn = {};
-
-// nQuery.fn.extend = function(exts) {
-// 	for (let ext in exts) {
-// 		nQueryObject.prototype[ext] = function() {
-// 			exts[ext].apply(this, arguments)
-// 		}
-// 	}
-// }
+nQuery.fn = new nQueryPlugins;
 
 document.addEventListener("DOMContentLoaded", () => {
 	for (let i = 0; i < window.nQuery.__internal_r.length; i++) {
