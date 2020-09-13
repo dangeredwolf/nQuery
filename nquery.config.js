@@ -1,10 +1,21 @@
 /*
-	nQuery Modules List
+	nQuery Config
 
-	This is where you can add modules to be compiled directly into the nQuery source.
+	This is where any configurable compile-time options are stored.
 */
 
+const config = {
+	use$:true,
+	usejQuery:true
+}
 
+/*
+	nQuery Modules List
+
+	This is where you can add or remove any modules that are loaded into nQuery
+*/
+
+// Event handler helper function
 import handler from "./src/addEventHandler.js";
 
 let windowModules = []; // Modules for Window objects
@@ -211,4 +222,4 @@ documentModules.trigger = trigger; // also should work on window
 import width from "./src/element/width.js";
 elementModules.width = width;
 
-export {elementModules, documentModules, windowModules, objectModules, globalModules}
+export {elementModules, documentModules, windowModules, objectModules, globalModules, config}

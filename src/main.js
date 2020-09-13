@@ -1,4 +1,4 @@
-import {elementModules, documentModules, windowModules, objectModules, globalModules} from "./../nquery.modules.js";
+import {config, elementModules, documentModules, windowModules, objectModules, globalModules} from "./../nquery.config.js";
 import {normalizeElementArray, renderHTML, splitCSSClasses} from "./utils.js"; // splitCSSClasses is only used for __debugMethods
 import nQueryObject from "./class/nQueryObject.js";
 import nQueryDocument from "./class/nQueryDocument.js";
@@ -81,10 +81,14 @@ document.addEventListener("DOMContentLoaded", () => {
 	window.nQuery.__ready = true;
 });
 
-window.$ = nQuery;
-// if (!window.jQuery) {
-// 	window.jQuery = nQuery;
-// }
+if (config.use$ && !window.$) {
+	window.$ = nQuery;
+}
+
+if (config.usejQuery && !window.jQuery) {
+	window.jQuery = nQuery;
+}
+
 window.nQuery = nQueryInit;
 
 window.nQueryObject = nQueryObject;
