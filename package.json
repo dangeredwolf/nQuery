@@ -1,6 +1,6 @@
 {
     "name": "nQuery",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "A small, highly modular alternative to jQuery",
     "scripts": {
         "build": "rollup -c",
