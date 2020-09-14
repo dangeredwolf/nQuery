@@ -16,6 +16,7 @@ export default {
 		{
 			file: 'out/nquery.js',
 			format: 'iife', // immediately-invoked function expression — suitable for <script> tags
+			name:"nQuery",
 			sourcemap: true,
 			banner: `/**\n* nQuery ${require('./package.json').version}\n* @license MIT\n* https://github.com/dangeredwolf/nQuery\n**/`,
 			hoistTransitiveImports: true
@@ -24,6 +25,7 @@ export default {
 			file: 'out/nquery.min.js',
 			format: 'iife', // immediately-invoked function expression — suitable for <script> tags
 			sourcemap: true,
+			name:"nQuery",
 			banner: `/**\n* nQuery ${require('./package.json').version}\n* @license MIT\n* https://github.com/dangeredwolf/nQuery\n**/`,
 			hoistTransitiveImports: true,
 			plugins: [terser({

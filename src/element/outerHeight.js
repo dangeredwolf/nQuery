@@ -1,1 +1,6 @@
-export default objects => objects[0]?.offsetHeight || 0
+export default objects => {
+	if (objects[0] instanceof Window)
+		return objects[0].outerHeight;
+	else
+		return objects[0].offsetHeight;
+}

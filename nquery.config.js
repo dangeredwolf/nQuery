@@ -135,6 +135,12 @@ handler(elementModules, "hover");
 import html from "./src/element/html.js";
 elementModules.html = html;
 
+import innerHeight from "./src/element/innerHeight.js";
+elementModules.innerHeight = innerHeight;
+
+import innerWidth from "./src/element/innerWidth.js";
+elementModules.innerWidth = innerWidth;
+
 import insertBefore from "./src/element/insertBefore.js";
 elementModules.insertBefore = insertBefore;
 
