@@ -3,9 +3,9 @@
     "version": "0.5.0",
     "description": "A small, highly modular alternative to jQuery",
     "scripts": {
-        "build": "rollup -c",
-        "start": "rollup -c",
-        "test": "rollup -c"
+        "build": "rollup -c rollup.config.mjs",
+        "start": "rollup -c rollup.config.mjs",
+        "test": "rollup -c rollup.config.mjs"
     },
     "repository": "https://github.com/dangeredwolf/nQuery",
     "author": "dangeredwolf",
